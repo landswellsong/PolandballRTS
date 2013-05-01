@@ -36,14 +36,10 @@ public class Bitmap {
 		int y0 = yPos;
 		int x1 = xPos + b.w;
 		int y1 = yPos + b.h;
-		if (x0 < 0)
-			x0 = 0;
-		if (y0 < 0)
-			y0 = 0;
-		if (x1 > w)
-			x1 = w;
-		if (y1 > h)
-			y1 = h;
+		if (x0 < 0) x0 = 0;
+		if (y0 < 0) y0 = 0;
+		if (x1 > w) x1 = w;
+		if (y1 > h) y1 = h;
 
 		if (xFlip) {
 			for (int y = y0; y < y1; y++) {
@@ -51,8 +47,7 @@ public class Bitmap {
 				int dp = y * w;
 				for (int x = x0; x < x1; x++) {
 					int c = b.pixels[sp - x];
-					if (c < 0)
-						pixels[dp + x] = b.pixels[sp - x];
+					if (c < 0) pixels[dp + x] = b.pixels[sp - x];
 				}
 			}
 		} else {
@@ -61,13 +56,11 @@ public class Bitmap {
 				int dp = y * w;
 				for (int x = x0; x < x1; x++) {
 					int c = b.pixels[sp + x];
-					if (c < 0)
-						pixels[dp + x] = b.pixels[sp + x];
+					if (c < 0) pixels[dp + x] = b.pixels[sp + x];
 				}
 			}
 		}
 	}
-
 
 	public void setPixel(int xp, int yp, int col) {
 		xp += xOffs;
@@ -82,14 +75,10 @@ public class Bitmap {
 	}
 
 	public void fill(int x0, int y0, int x1, int y1, int col) {
-		if (x0 < 0)
-			x0 = 0;
-		if (y0 < 0)
-			y0 = 0;
-		if (x1 >= w)
-			x1 = w - 1;
-		if (y1 >= h)
-			y1 = h - 1;
+		if (x0 < 0) x0 = 0;
+		if (y0 < 0) y0 = 0;
+		if (x1 >= w) x1 = w - 1;
+		if (y1 >= h) y1 = h - 1;
 
 		for (int y = y0; y <= y1; y++) {
 			for (int x = x0; x <= x1; x++) {

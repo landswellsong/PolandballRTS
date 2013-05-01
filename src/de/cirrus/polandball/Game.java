@@ -14,9 +14,6 @@ import de.cirrus.polandball.level.EntityListCache;
 import de.cirrus.polandball.level.Level;
 import de.cirrus.polandball.units.Unit;
 
-//now I need ideas !!!!!11
-//well you can't see much yet, but at least...wait
-
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
@@ -26,10 +23,10 @@ public class Game extends Canvas implements Runnable {
 	public static final String TITLE = "Polandball";
 
 	public Thread gameThread;
-	
+
 	public Bitmap screenBitmap;
 	public Bitmap shadows;
-	
+
 	public static JFrame frame;
 	public volatile boolean running = false;
 
@@ -49,19 +46,17 @@ public class Game extends Canvas implements Runnable {
 		screenBitmap = new Bitmap(image);
 		level = new Level(WIDTH, HEIGHT);
 		shadows = new Bitmap(WIDTH, HEIGHT);
-		for (int y = 0; y < HEIGHT/32; y++) {
-			for (int x = 0; x < WIDTH/32; x++) {
+		for (int y = 0; y < HEIGHT / 32; y++) {
+			for (int x = 0; x < WIDTH / 32; x++) {
 				Unit u;
 				u = Unit.create(0, 0);
-				u.x = x*32;
-				u.y = y*32;
+				u.x = x * 32;
+				u.y = y * 32;
 				level.add(u);
 			}
 		}
 	}
 
-	//brb cigarette
-	
 	public synchronized void start() {
 		running = true;
 		gameThread = new Thread(this);
@@ -77,15 +72,12 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-	
-	// NEED PERFORMANCE TUNING NAOW!
-	// this is my method of doing this, it's probably not what they'd teach you in uni
 	public void run() {
 		init();
-		double nsPerFrame = 1000000000D/60D; //O SHIT
+		double nsPerFrame = 1000000000D / 60D;
 		double unprocessedTime = 0;
 		double maxSkipFrame = 10;
-		
+
 		long lastTime = System.nanoTime();
 		long lastFrameTime = System.currentTimeMillis();
 		int frames = 0;
@@ -94,14 +86,14 @@ public class Game extends Canvas implements Runnable {
 			long now = System.nanoTime();
 			double passedTime = (now - lastTime) / nsPerFrame;
 			lastTime = now;
-			
+
 			if (passedTime < -maxSkipFrame) passedTime = -maxSkipFrame;
 			if (passedTime > maxSkipFrame) passedTime = maxSkipFrame;
-			
+
 			unprocessedTime += passedTime;
-			
+
 			boolean render = true;
-			
+
 			while (unprocessedTime > 1) {
 				unprocessedTime -= 1;
 				EntityListCache.reset();
@@ -109,20 +101,20 @@ public class Game extends Canvas implements Runnable {
 				ticks++;
 				render = true;
 			}
-			
+
 			if (render) {
 				EntityListCache.reset();
 				render(screenBitmap);
 				frames++;
 			}
-			
+
 			if (System.currentTimeMillis() - lastFrameTime > 1000) {
-				lastFrameTime+=1000; //so it updates every second
+				lastFrameTime += 1000;
 				System.out.println("fps: " + frames + ", ticks: " + ticks);
 				ticks = 0;
 				frames = 0;
 			}
-			
+
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -132,7 +124,6 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-
 	private void tick() {
 		level.tick();
 	}
@@ -140,7 +131,7 @@ public class Game extends Canvas implements Runnable {
 	private void swap() {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
-			createBufferStrategy(3); //not much of a difference anyway
+			createBufferStrategy(3);
 			requestFocus();
 			return;
 		}
@@ -148,17 +139,17 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		int w = getWidth() - WIDTH*SCALE;
-		int h = getHeight() - HEIGHT*SCALE;
+		int w = getWidth() - WIDTH * SCALE;
+		int h = getHeight() - HEIGHT * SCALE;
 
-		g.drawImage(image, w/2, h/2, WIDTH*SCALE, HEIGHT*SCALE, null);
+		g.drawImage(image, w / 2, h / 2, WIDTH * SCALE, HEIGHT * SCALE, null);
 		g.dispose();
 		bs.show();
 	}
 
 	private void render(Bitmap screen) {
 		shadows.clear(0);
-		
+
 		level.renderBg(screen);
 		level.renderShadows(shadows);
 		screen.shade(shadows);
@@ -166,8 +157,8 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		// just writing down code here, no idea about the game yet
 		Game game = new Game();
+
 		frame = new JFrame(TITLE);
 		frame.setLayout(new BorderLayout());
 		frame.add(game);

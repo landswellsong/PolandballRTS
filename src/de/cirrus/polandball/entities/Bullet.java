@@ -9,10 +9,8 @@ public class Bullet extends Entity {
 
 	public int speed = 16;
 
-	
-	//TODO specialize
-	public Bullet(Unit owner, double x, double y, double z, double xa,
-			double ya, double za) {
+	// TODO specialize
+	public Bullet(Unit owner, double x, double y, double z, double xa, double ya, double za) {
 		this.owner = owner;
 		this.xo = this.x = x;
 		this.yo = this.y = y;
@@ -24,8 +22,7 @@ public class Bullet extends Entity {
 	}
 
 	public boolean blocks(Entity e) {
-		if (e == owner)
-			return false;
+		if (e == owner) return false;
 		return true;
 	}
 
@@ -41,11 +38,11 @@ public class Bullet extends Entity {
 		double xd = xo - x;
 		double yd = yo - y;
 		double zd = zo - z;
-		
-		int steps = (int) (Math.sqrt(xd*xd+yd*yd+zd*zd) + 1);
+
+		int steps = (int) (Math.sqrt(xd * xd + yd * yd + zd * zd) + 1);
 		for (int i = 0; i < steps; i++) {
 			double zz = z + zd * i / steps;
-			b.setPixel((int)(x + xd * i / steps), (int) (y + yd * i / steps - zz), 0xFF00FF00);
+			b.setPixel((int) (x + xd * i / steps), (int) (y + yd * i / steps - zz), 0xFF00FF00);
 		}
 	}
 
@@ -53,14 +50,14 @@ public class Bullet extends Entity {
 		double xd = xo - x;
 		double yd = yo - y;
 		double zd = zo - z;
-		
-		int steps = (int) (Math.sqrt(xd*xd+yd*yd+zd*zd) + 1);
+
+		int steps = (int) (Math.sqrt(xd * xd + yd * yd + zd * zd) + 1);
 		for (int i = 0; i < steps; i++) {
 			double zz = 0;
-			b.setPixel((int)(x + xd * i / steps), (int) (y + yd * i / steps - zz), 1);
+			b.setPixel((int) (x + xd * i / steps), (int) (y + yd * i / steps - zz), 1);
 		}
 	}
-	
+
 	public void collide(Entity e, double xxa, double yya, double zza) {
 		remove();
 	}

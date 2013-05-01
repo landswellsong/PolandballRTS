@@ -5,7 +5,6 @@ package de.cirrus.polandball.units;
  * 
  * */
 
-
 public class Poland extends Unit {
 
 	public Poland(int team) {

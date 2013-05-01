@@ -15,9 +15,8 @@ public class Debris extends Particle {
 	public double bounce = 0.6;
 	public int icon;
 	public double gravity = 0.08;
-	
-	
-	//TODO optimize
+
+	// TODO optimize
 	public Debris(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
@@ -36,75 +35,65 @@ public class Debris extends Particle {
 		ya = (ya / dd * speed);
 		za = (za / dd + 0.4) * speed;
 	}
-	
-	
+
 	public void tick() {
 		super.tick();
 		if (--life < 0) {
 			remove();
 			return;
 		}
-		
+
 		boolean onGround = z <= 1;
 		if (onGround) {
 			xa *= 0.85;
-			ya *= 0.85; 
+			ya *= 0.85;
 		} else {
-			xa*=drag;
-			ya*=drag;
+			xa *= drag;
+			ya *= drag;
 		}
 		za -= gravity;
 		attemptMove();
 	}
-	
-	
+
 	public void render(Bitmap b) {
 		int xp = (int) x;
 		int yp = (int) (y - z);
-		
+
 		b.draw(getBitmap(), xp - 4, yp - 4);
 	}
 
 	public void renderShadows(Bitmap b) {
 		int xp = (int) x;
 		int yp = (int) y;
-		
+
 		b.fill(xp - 1, yp, xp, yp, 1);
 	}
-	
+
 	private Bitmap getBitmap() {
-		return Art.i.particles[icon%8][icon/8];
+		return Art.i.particles[icon % 8][icon / 8];
 	}
 
-	
-	
-
 	public void attemptMove() {
-		int steps = (int) (Math.sqrt(xa*xa+ya*ya+za*za) + 1);
-		
+		int steps = (int) (Math.sqrt(xa * xa + ya * ya + za * za) + 1);
+
 		for (int i = 0; i < steps; i++) {
 			_move(xa / steps, 0, 0);
 			_move(0, ya / steps, 0);
 			_move(0, 0, za / steps);
 		}
 	}
-	
-	
+
 	private void _move(double xxa, double yya, double zza) {
-		if (removed)
-			return;
+		if (removed) return;
 		double xn = x + xxa;
 		double yn = y + yya;
 		double zn = z + zza;
-		if (xn < 0 || yn < 0 || xn >= level.w || yn >= level.h || zn < 0
-				|| zn > level.maxHeight) {
-			if (zn < 0)
-				zn = 0; 
+		if (xn < 0 || yn < 0 || xn >= level.w || yn >= level.h || zn < 0 || zn > level.maxHeight) {
+			if (zn < 0) zn = 0;
 			collide(null, xxa, yya, zza);
 			return;
 		}
-		List<Entity> entities = level.getEntities(xn - xr, yn - yr, zn,
-				xn + xr, yn + yr, zn + zh);
+		List<Entity> entities = level.getEntities(xn - xr, yn - yr, zn, xn + xr, yn + yr, zn + zh);
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			if (e.blocksParticles()) {
@@ -119,8 +108,8 @@ public class Debris extends Particle {
 	}
 
 	public void collide(Entity e, double xxa, double yya, double zza) {
-		if (xxa != 0) xa*= -bounce;
-		if (yya != 0) ya*= -bounce;
-		if (zza != 0) za*= -bounce;
+		if (xxa != 0) xa *= -bounce;
+		if (yya != 0) ya *= -bounce;
+		if (zza != 0) za *= -bounce;
 	}
 }
