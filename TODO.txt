@@ -1,0 +1,32 @@
+rpg ? 
+rts!?
+
+I can't type for shit today
+brb 
+
+
+RTS + Poland as a main character
+Weapon upgrades
+AI? at least some nice pathfinder
+
+
+Graphics: shadows, three dimensional (pseudo)
+I need a cigarette
+
+
+You can't see much yet, as we didn't implement any Entities yet
+I need to think :3
+
+Entity: 
+	x, y, z
+	xa, ya, za; 
+	
+	intersects();
+	collide();
+	attemptMove();
+	
+	I hope you like some GOA :3
+	Almost done with the boring stuff
+	
+	!!INPUT!!
+	
