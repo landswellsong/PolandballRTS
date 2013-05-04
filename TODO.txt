@@ -1,18 +1,12 @@
 RTS + Poland as a main character
 Weapon upgrades
-AI? at least some nice pathfinder
+AI with the blockmap as a node field
 
 
 Graphics: shadows, three dimensional (pseudo)
 
 
-Entity: 
-	x, y, z
-	xa, ya, za; 
-	
-	intersects();
-	collide();
-	attemptMove();
-	
-I'm going to end for now. Have to visit my parents this weekend. Hopefully I'll continue on monday.
-Have fun @ all and thanks for watching
+I have to think
+
+Isometric tiles?
+Revealable area?

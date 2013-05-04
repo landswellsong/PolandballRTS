@@ -52,8 +52,7 @@ public class Rocket extends Bullet {
 	public void render(Bitmap b){
 		int xp = (int) x;
 		int yp = (int) (y - z);
-		int frame = (int) (Math.floor(-Math.atan2(ya, xa) * 16 / (Math.PI*2)) + 4.5) & 7;
-		
+		int frame = (int) Math.floor(-Math.atan2(ya, xa) * 16 / (Math.PI*2) + 4.5) & 7;
 		b.draw(Art.i.projectiles[frame][0], xp - 4, yp - 4);
 	}
 	

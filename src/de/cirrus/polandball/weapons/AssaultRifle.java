@@ -9,7 +9,7 @@ public class AssaultRifle extends Weapon {
 		super(owner);
 		ammoLoaded = maxAmmoLoaded = 30;
 		ammoCarried = maxAmmoCarried = 240;
-		maxRange = 400.0;
+		maxRange = 220.0;
 		shootDelayTime = 0.1 / 1;
 		startReloadDelayTime = 1.16;
 		reloadDelayTime = 1.16;

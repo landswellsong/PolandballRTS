@@ -16,6 +16,7 @@ public class Art {
 	public Bitmap[][] mouseCursor = loadAndCut("/cursors/mousecursor.png", 16, 16);
 	public Bitmap[][] particles = loadAndCut("/particles/particles.png", 8, 8);
 	public Bitmap[][] projectiles = loadAndCut("/projectiles/projectiles.png", 8, 8);
+	public Bitmap[][] tiles = loadAndCut("/tiles/tiles.png", 8, 8);
 
 	public static Bitmap[][] loadAndCut(String name, int sw, int sh) {
 		BufferedImage image;

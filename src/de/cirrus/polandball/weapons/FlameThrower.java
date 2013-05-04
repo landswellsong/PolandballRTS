@@ -12,7 +12,7 @@ public class FlameThrower extends Weapon {
 		shootDelayTime = 0.04;
 		startReloadDelayTime = 0.0;
 		reloadDelayTime = 0.0;
-		maxRange = 60;
+		maxRange = 120;
 		aimLead = 2;
 		
 		highRamp = 100;

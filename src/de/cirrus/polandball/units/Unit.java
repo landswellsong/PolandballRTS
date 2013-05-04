@@ -12,8 +12,7 @@ import de.cirrus.polandball.particles.Debris;
 import de.cirrus.polandball.particles.FlameDebris;
 import de.cirrus.polandball.particles.MeatDebris;
 import de.cirrus.polandball.particles.SplatDebris;
-
-import de.cirrus.polandball.weapons.RocketLauncher;
+import de.cirrus.polandball.weapons.StickyBombLauncher;
 import de.cirrus.polandball.weapons.Weapon;
 
 public class Unit extends Mob {
@@ -37,22 +36,26 @@ public class Unit extends Mob {
 
 	public int shootTime;
 	public int speed = 100;
-	public int maxHealth = 125;
+	public int maxHealth = 1250;
 	public int health = 125;
 	public int hurtTime = 0;
 	public int aimDir = 0;
 
 	public int burnTime, burnInterval;
 
-	public Weapon weapon = new RocketLauncher(this);
-
+	//public Weapon weapon = new RocketLauncher(this);
+	//public Weapon weapon = new Shotgun(this);
+	//public Weapon weapon = new SniperRifle(this);
+	//public Weapon weapon = new Minigun(this);
+	public Weapon weapon = new StickyBombLauncher(this);
+	
 	public Unit(int ySpriteIndex) {
 		this.ySpriteIndex = ySpriteIndex;
 		init();
 	}
 
 	public void init() {
-		this.team = ySpriteIndex; // everyone vs everyone! for now
+		this.team = 0;
 	}
 
 	public void hurt(int damage) {
@@ -62,7 +65,9 @@ public class Unit extends Mob {
 
 	public void hitBy(Bullet bullet) {
 		if (bullet.owner.team == team) return; // friendly fire off
+		
 		bullet.applyHitEffect(this);
+		
 		hurt(bullet.getDamage(this));
 		knockBack(bullet.xa * 0.25, bullet.ya * 0.25, bullet.za * 0.25);
 		Debris sd = new SplatDebris(x, y, z + 5);
@@ -162,7 +167,7 @@ public class Unit extends Mob {
 		double yd = (target.y + target.ya * lead) - y;
 		double zd = (target.z + target.za * lead) - z;
 		if (weapon.aimOnGround) {
-			zd = z + 5;
+			zd = (0) - (z + 5);
 		}
 		double dd = Math.sqrt(xd * xd + yd * yd + zd * zd);
 		xd /= dd;
@@ -251,6 +256,17 @@ public class Unit extends Mob {
 		if (unitClass == UNIT_FINLAND) unit = new Finland();
 		if (unitClass == UNIT_JAPAN) unit = new Japan();
 		return unit;
+	}
+	
+	
+	public void handleExplosion(Bullet source, int dmg, double xd, double yd, double zd) {
+		if (this == source.owner) {
+			dmg /= 2; //at least a dmg reduction if you're dumb enough to shoot with rockets at your own mate
+		} else if (team == source.owner.team) {
+			return;
+		}
+		hurt(dmg);
+		knockBack(xd*2, yd*2, zd*2);
 	}
 
 	public void die() {

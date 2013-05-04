@@ -23,7 +23,7 @@ public class Bullet extends Entity {
 		this.weapon = weapon;
 		this.xo = this.x = owner.x;
 		this.yo = this.y = owner.y;
-		this.zo = this.z = owner.z;
+		this.zo = this.z = owner.z + 5;
 		xStart = x;
 		yStart = y;
 		zStart = z;

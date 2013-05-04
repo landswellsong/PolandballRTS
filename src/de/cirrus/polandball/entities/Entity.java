@@ -91,4 +91,8 @@ public class Entity extends Sprite {
 		return false;
 	}
 	
+	public void handleExplosion(Bullet source, int dmg, double xd, double yd, double zd){
+		
+	}
+	
 }

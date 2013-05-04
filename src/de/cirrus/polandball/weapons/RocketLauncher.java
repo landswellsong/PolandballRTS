@@ -14,15 +14,14 @@ public class RocketLauncher extends Weapon {
 		reloadDelayTime = 0.92;
 		aimOnGround = true;
 		aimLead = 2;
-		
 		highRamp = 125;
 		lowRamp = 53;
 	}
-	
+
 	public void shoot(double xa, double ya, double za) {
 		super.shoot(xa, ya, za);
 		owner.level.add(new Rocket(owner, this, xa, ya, za, 90));
 		shootDelay = shootDelayTime;
 	}
-	
-}	
+
+}

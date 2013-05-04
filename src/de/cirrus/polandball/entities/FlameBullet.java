@@ -13,7 +13,7 @@ public class FlameBullet extends Bullet {
 		this.xa = xa * 0.5;
 		this.ya = ya * 0.5;
 		this.za = za * 0.5;
-		life = 45;
+		life = 90;
 	}
 
 	public boolean blocks(Entity e) {

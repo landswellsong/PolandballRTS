@@ -9,8 +9,8 @@ public class Sprite {
 	public static final double SCALE_Y = 6.0 / 16.0;
 	
 	public double x, y, z;
-	public double xr = 5;
-	public double yr = 5;
+	public double xr = 2;
+	public double yr = 2;
 	public double zh = 5;
 
 	public Level level;
