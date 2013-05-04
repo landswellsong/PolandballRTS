@@ -5,21 +5,24 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-import de.cirrus.polandball.level.EntityListCache;
+import de.cirrus.polandball.entities.EntityListCache;
 import de.cirrus.polandball.level.Level;
 import de.cirrus.polandball.units.Unit;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
-	public static final int WIDTH = 320;
-	public static final int HEIGHT = 240;
 	public static final int SCALE = 2;
+	public static final int WIDTH = 960/SCALE;
+	public static final int HEIGHT = 720/SCALE;
+	
 	public static final String TITLE = "Polandball";
 
 	public Thread gameThread;
@@ -33,28 +36,25 @@ public class Game extends Canvas implements Runnable {
 	private Level level;
 	private BufferedImage image;
 
+	private Input mouse;
+	private InputHandler input;
+	
 	public Game() {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 
+		input = new InputHandler(this);
 	}
 
 	public void init() {
 		Art.init();
-		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		screenBitmap = new Bitmap(image);
+		mouse = input.updateMouseStatus(SCALE);
+		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB), new Point(0,0), "invisible"));
 		level = new Level(WIDTH, HEIGHT);
 		shadows = new Bitmap(WIDTH, HEIGHT);
-		for (int y = 0; y < HEIGHT / 32; y++) {
-			for (int x = 0; x < WIDTH / 32; x++) {
-				Unit u;
-				u = Unit.create(0, 0);
-				u.x = x * 32;
-				u.y = y * 32;
-				level.add(u);
-			}
-		}
 	}
 
 	public synchronized void start() {
@@ -96,6 +96,7 @@ public class Game extends Canvas implements Runnable {
 
 			while (unprocessedTime > 1) {
 				unprocessedTime -= 1;
+				mouse = input.updateMouseStatus(SCALE);
 				EntityListCache.reset();
 				tick();
 				ticks++;
@@ -125,6 +126,18 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
+		if (mouse.b0Clicked){
+			Unit unit = Unit.create((int)(Math.random()*8));
+			unit.x = mouse.x;
+			unit.y = mouse.y;
+			level.add(unit);
+		}
+		if (mouse.b1Clicked){
+			Unit unit = Unit.create(0);
+			unit.x = mouse.x;
+			unit.y = mouse.y;
+			level.add(unit);
+		}
 		level.tick();
 	}
 
@@ -154,6 +167,7 @@ public class Game extends Canvas implements Runnable {
 		level.renderShadows(shadows);
 		screen.shade(shadows);
 		level.renderSprites(screen);
+		if (mouse.onScreen) screen.draw(Art.i.mouseCursor[0][0], mouse.x - 1, mouse.y - 1);
 	}
 
 	public static void main(String[] args) {

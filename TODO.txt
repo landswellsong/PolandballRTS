@@ -14,3 +14,5 @@ Entity:
 	collide();
 	attemptMove();
 	
+I'm going to end for now. Have to visit my parents this weekend. Hopefully I'll continue on monday.
+Have fun @ all and thanks for watching

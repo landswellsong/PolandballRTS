@@ -9,12 +9,12 @@ import de.cirrus.polandball.entities.Entity;
 
 public class Debris extends Particle {
 	public static final Random random = new Random();
-	double xa, ya, za;
+	public double xa, ya, za;
 	public int life;
 	public double drag = 0.998;
 	public double bounce = 0.6;
-	public int icon;
-	public double gravity = 0.08;
+	public int icon = 0;
+	public double gravity = 0.20;
 
 	// TODO optimize
 	public Debris(double x, double y, double z) {
@@ -30,10 +30,10 @@ public class Debris extends Particle {
 			za = random.nextDouble() * 2 - 1;
 		} while (xa * xa + ya * ya + za * za > 1);
 		double dd = Math.sqrt(xa * xa + ya * ya + za * za);
-		double speed = 2;
+		double speed = 1;
 		xa = xa / dd * speed;
-		ya = (ya / dd * speed);
-		za = (za / dd + 0.4) * speed;
+		ya = (ya / dd * speed) * 0.5;
+		za = (za / dd + 1.0) * speed;
 	}
 
 	public void tick() {
@@ -58,7 +58,6 @@ public class Debris extends Particle {
 	public void render(Bitmap b) {
 		int xp = (int) x;
 		int yp = (int) (y - z);
-
 		b.draw(getBitmap(), xp - 4, yp - 4);
 	}
 

@@ -62,6 +62,40 @@ public class Bitmap {
 		}
 	}
 
+	
+	public void blendDraw(Bitmap b, int xPos, int yPos, int col) {
+		xPos += xOffs;
+		yPos += yOffs;
+		int x0 = xPos;
+		int y0 = yPos;
+		int x1 = xPos + b.w;
+		int y1 = yPos + b.h;
+		if (x0 < 0) x0 = 0;
+		if (y0 < 0) y0 = 0;
+		if (x1 > w) x1 = w;
+		if (y1 > h) y1 = h;
+
+		if (xFlip) {
+			for (int y = y0; y < y1; y++) {
+				int sp = (y - yPos) * b.w + xPos + b.w - 1;
+				int dp = y * w;
+				for (int x = x0; x < x1; x++) {
+					int c = b.pixels[sp - x];
+					if (c < 0) pixels[dp + x] = ((b.pixels[sp - x] & 0xfefefefe ) + (col & 0xfefefefe)) >> 1;
+				}
+			}
+		} else {
+			for (int y = y0; y < y1; y++) {
+				int sp = (y - yPos) * b.w - xPos;
+				int dp = y * w;
+				for (int x = x0; x < x1; x++) {
+					int c = b.pixels[sp + x];
+					if (c < 0) pixels[dp + x] = ((b.pixels[sp + x] & 0xfefefefe ) + (col & 0xfefefefe)) >> 1;
+				}
+			}
+		}
+	}
+	
 	public void setPixel(int xp, int yp, int col) {
 		xp += xOffs;
 		yp += yOffs;

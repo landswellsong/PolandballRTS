@@ -8,6 +8,7 @@ import java.util.TreeSet;
 import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.Sprite;
 import de.cirrus.polandball.entities.Entity;
+import de.cirrus.polandball.entities.Rocket;
 import de.cirrus.polandball.particles.Particle;
 
 public class Level {
@@ -51,9 +52,14 @@ public class Level {
 		p.init(this);
 	}
 
+	//I'm really sorry guys, something removes them before they even get spawned :P
+	//I'll figure this out later, it's actually not THAT important, until we get into aiming
+	//for those who want the playlist, you can have it, brb!
+	
 	public void tick() {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
+			
 			if (!e.removed) e.tick();
 			if (e.removed) {
 				blockmap.remove(e);
@@ -94,5 +100,10 @@ public class Level {
 
 	public List<Entity> getEntities(double x0, double y0, double z0, double x1, double y1, double z1) {
 		return blockmap.getEntities(x0, y0, z0, x1, y1, z1);
+	}
+
+	public void explode(Rocket rocket, double x, double y, double z, int dmg, int rr) {
+		
+		
 	}
 }

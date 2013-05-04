@@ -2,27 +2,42 @@ package de.cirrus.polandball.entities;
 
 import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.units.Unit;
+import de.cirrus.polandball.weapons.Weapon;
 
 public class Bullet extends Entity {
 	public Unit owner;
+	public Weapon weapon;
 	public double xo, yo, zo;
-
-	public int speed = 16;
+	public double xStart, yStart, zStart;
+	public int dmg;
 
 	// TODO specialize
-	public Bullet(Unit owner, double x, double y, double z, double xa, double ya, double za) {
+	
+	public Bullet(Unit owner, Weapon weapon, double xa, double ya, double za, int dmg) {
+		this(owner, weapon, xa, ya, za, dmg, 4);
+
+	}
+	
+	public Bullet(Unit owner, Weapon weapon, double xa, double ya, double za, int dmg, int speed) {
 		this.owner = owner;
-		this.xo = this.x = x;
-		this.yo = this.y = y;
-		this.zo = this.z = z;
+		this.weapon = weapon;
+		this.xo = this.x = owner.x;
+		this.yo = this.y = owner.y;
+		this.zo = this.z = owner.z;
+		xStart = x;
+		yStart = y;
+		zStart = z;
 		this.xa = xa * speed;
 		this.ya = ya * speed;
 		this.za = za * speed;
-
+		this.dmg = dmg;
+		isCollideable = false;
 	}
 
 	public boolean blocks(Entity e) {
 		if (e == owner) return false;
+		if (e instanceof Bullet) return false;
+		if (e instanceof Unit && ((Unit) e).team == owner.team) return false;
 		return true;
 	}
 
@@ -41,8 +56,11 @@ public class Bullet extends Entity {
 
 		int steps = (int) (Math.sqrt(xd * xd + yd * yd + zd * zd) + 1);
 		for (int i = 0; i < steps; i++) {
+			if (Math.random() * steps < i) continue;
 			double zz = z + zd * i / steps;
-			b.setPixel((int) (x + xd * i / steps), (int) (y + yd * i / steps - zz), 0xFF00FF00);
+			int br = 255 - i * 256 / steps;
+			int col = 0xffffff00 | (0x1 * br);
+			b.setPixel((int) (x + xd * i / steps), (int) (y + yd * i / steps - zz), col);
 		}
 	}
 
@@ -58,7 +76,42 @@ public class Bullet extends Entity {
 		}
 	}
 
+	public void applyHitEffect(Unit unit) {
+		
+	}
+	
+	
+	
 	public void collide(Entity e, double xxa, double yya, double zza) {
+		if (e != null) {
+			e.hitBy(this);
+		}
 		remove();
+	}
+
+	public int getDamage(Unit unit) {
+		return getDamage(unit.x, unit.y, unit.z);
+	}
+	
+	public int getDamage(double xx, double yy, double zz) {
+		double xd = xStart - xx;
+		double yd = yStart - yy;
+		double zd = zStart - zz;
+		double distanceTravelled = Math.sqrt(xd * xd + yd * yd + zd * zd) * 5;
+		double dmg = this.dmg;
+		
+		if (distanceTravelled < weapon.lowRamp)	{
+			dmg *= weapon.highRamp / 100.0;
+		} else if (distanceTravelled > weapon.farDistance) {
+			dmg *= weapon.lowRamp / 100.0;
+		} else if (distanceTravelled < weapon.midDistance) {
+			double fraction = 1 - (distanceTravelled - weapon.nearDistance) / (weapon.midDistance - weapon.nearDistance);
+			dmg *= (weapon.highRamp * fraction + 100 * (1 - fraction)) / 100.0;
+		} else {
+			double fraction = 1 - (distanceTravelled - weapon.midDistance) / (weapon.farDistance - weapon.midDistance); 
+			dmg *= (weapon.highRamp * fraction + 100 * (1 - fraction)) / 100.0;
+		}
+		int d = (int) (Weapon.random.nextDouble() + dmg);
+		return d;
 	}
 }

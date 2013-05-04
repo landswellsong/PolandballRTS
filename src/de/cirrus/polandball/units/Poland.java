@@ -1,14 +1,14 @@
 package de.cirrus.polandball.units;
 
 /**
- * POLAND STRONG!
+ * POLAND STRONG!!!!!!
  * 
  * */
 
 public class Poland extends Unit {
 
-	public Poland(int team) {
-		super(Unit.UNIT_POLAND, team);
+	public Poland() {
+		super(0);
 	}
 
 }

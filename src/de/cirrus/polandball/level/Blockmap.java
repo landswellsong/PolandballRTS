@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.cirrus.polandball.entities.Entity;
+import de.cirrus.polandball.entities.EntityListCache;
 
 public class Blockmap {
 
@@ -80,8 +81,8 @@ public class Blockmap {
 
 		List<Entity> result = EntityListCache.get();
 
-		for (int y = yc0; y < yc1; y++) {
-			for (int x = xc0; x < xc1; x++) {
+		for (int y = yc0; y <= yc1; y++) {
+			for (int x = xc0; x <= xc1; x++) {
 				blockCells[x + y * xs].getEntities(result, x0, y0, z0, x1, y1, z1); 
 																					
 																					

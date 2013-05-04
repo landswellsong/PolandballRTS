@@ -12,8 +12,10 @@ public class Art {
 		i = new Art();
 	}
 
-	public Bitmap[][] poland = loadAndCut("/balls/Poland.png", 16, 16);
+	public Bitmap[][] balls = loadAndCut("/balls/balls.png", 16, 16);
+	public Bitmap[][] mouseCursor = loadAndCut("/cursors/mousecursor.png", 16, 16);
 	public Bitmap[][] particles = loadAndCut("/particles/particles.png", 8, 8);
+	public Bitmap[][] projectiles = loadAndCut("/projectiles/projectiles.png", 8, 8);
 
 	public static Bitmap[][] loadAndCut(String name, int sw, int sh) {
 		BufferedImage image;
