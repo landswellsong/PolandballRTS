@@ -4,7 +4,13 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-//let's start with this
+/**
+ * Basic input class,  which defines what a Key is and how it is bound
+ * Relies on the InputHandler for the events
+ * */
+
+// what the fuck is a module
+
 
 public class Input {
 	public static class Key {
@@ -69,9 +75,9 @@ public class Input {
 		b1Clicked = !this.b1 && b1;
 		b2Clicked = !this.b2 && b2;
 		
-		b0Released = !this.b0 && b0;
-		b1Released = !this.b1 && b1;
-		b2Released = !this.b2 && b2;
+		b0Released = this.b0 && !b0;
+		b1Released = this.b1 && !b1;
+		b2Released = this.b2 && !b2;
 		
 		this.x = x;
 		this.y = y;

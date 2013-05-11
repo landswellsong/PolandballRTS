@@ -1,23 +1,26 @@
 package de.cirrus.polandball.units;
 
-import java.util.List;
-import java.util.Random;
-
 import de.cirrus.polandball.Art;
 import de.cirrus.polandball.Bitmap;
+import de.cirrus.polandball.Team;
 import de.cirrus.polandball.entities.Bullet;
 import de.cirrus.polandball.entities.Entity;
 import de.cirrus.polandball.entities.Mob;
+import de.cirrus.polandball.level.Level;
 import de.cirrus.polandball.particles.Debris;
 import de.cirrus.polandball.particles.FlameDebris;
 import de.cirrus.polandball.particles.MeatDebris;
 import de.cirrus.polandball.particles.SplatDebris;
+import de.cirrus.polandball.units.order.IdleOrder;
+import de.cirrus.polandball.units.order.Order;
 import de.cirrus.polandball.weapons.StickyBombLauncher;
 import de.cirrus.polandball.weapons.Weapon;
 
+import java.util.List;
+import java.util.Random;
+
 public class Unit extends Mob {
 	public static final Random random = new Random();
-
 	public static final int UNIT_POLAND = 0;
 	public static final int UNIT_GERMANY = 1;
 	public static final int UNIT_NETHERLANDS = 2;
@@ -26,36 +29,50 @@ public class Unit extends Mob {
 	public static final int UNIT_UKRAINE = 5;
 	public static final int UNIT_FINLAND = 6;
 	public static final int UNIT_JAPAN = 7;
-
-	private int ySpriteIndex;
-
-	public int team;
 	public double dir;
-	public double dira;
 	public double walkStep;
-
+	public Team team;
 	public int shootTime;
 	public int speed = 100;
-	public int maxHealth = 1250;
+	public int maxHealth = 125;
 	public int health = 125;
 	public int hurtTime = 0;
 	public int aimDir = 0;
-
 	public int burnTime, burnInterval;
-
 	//public Weapon weapon = new RocketLauncher(this);
 	//public Weapon weapon = new Shotgun(this);
 	//public Weapon weapon = new SniperRifle(this);
 	//public Weapon weapon = new Minigun(this);
+	public Order order = new IdleOrder();
 	public Weapon weapon = new StickyBombLauncher(this);
-	
+	private int ySpriteIndex;
+
 	public Unit(int ySpriteIndex) {
 		this.ySpriteIndex = ySpriteIndex;
 		init();
 	}
 
-	public void init() {
-		this.team = 0;
+	public static Unit create(int unitClass, Team team) {
+		Unit unit = null;
+		if (unitClass == UNIT_POLAND) unit = new Poland();
+		if (unitClass == UNIT_GERMANY) unit = new Germany();
+		if (unitClass == UNIT_NETHERLANDS) unit = new Netherlands();
+		if (unitClass == UNIT_FRANCE) unit = new France();
+		if (unitClass == UNIT_RUSSIA) unit = new Russia();
+		if (unitClass == UNIT_UKRAINE) unit = new Ukraine();
+		if (unitClass == UNIT_FINLAND) unit = new Finland();
+		if (unitClass == UNIT_JAPAN) unit = new Japan();
+		unit.init(team);
+		return unit;
+	}
+
+	public void init(Level level) {
+		super.init(level);
+		level.units.add(this);
+	}
+
+	public void init(Team team) {
+		this.team = team;
 	}
 
 	public void hurt(int damage) {
@@ -65,9 +82,9 @@ public class Unit extends Mob {
 
 	public void hitBy(Bullet bullet) {
 		if (bullet.owner.team == team) return; // friendly fire off
-		
+
 		bullet.applyHitEffect(this);
-		
+
 		hurt(bullet.getDamage(this));
 		knockBack(bullet.xa * 0.25, bullet.ya * 0.25, bullet.za * 0.25);
 		Debris sd = new SplatDebris(x, y, z + 5);
@@ -85,17 +102,17 @@ public class Unit extends Mob {
 
 	public void tick() {
 		super.tick();
-		
+
 		if (burnTime > 0) {
-			if(++burnInterval >= 30) {
+			if (++burnInterval >= 30) {
 				burnInterval = 0;
 				hurt(3); //dot
 			}
 			burnTime--;
 		}
-		
+
 		if (hurtTime >= 0) hurtTime--;
-		
+
 		weapon.tick();
 
 		if (weapon.canUse()) {
@@ -111,12 +128,11 @@ public class Unit extends Mob {
 			return;
 		}
 
-		boolean onGround = z <= 1;
-		if (onGround) {
+		if (isOnGround()) {
 			xa *= 0.5;
 			ya *= 0.5;
-			dira *= 0.9;
-			dira += ((random.nextDouble()) - (random.nextDouble()) * random.nextDouble()) * 0.01;
+			/*dira *= 0.9;
+			dira += ((random.nextDouble() - random.nextDouble()) * random.nextDouble()) * 0.1;
 			dir += dira;
 
 			double moveSpeed = 0.2 * speed / 100;
@@ -125,23 +141,23 @@ public class Unit extends Mob {
 
 			if (random.nextInt(100) == 0) {
 				za = 2;
-			}
+			}*/
 		} else {
 			xa *= 0.99;
 			ya *= 0.99;
 		}
-		za -= 0.15;
+		za -= 0.08;
+
+
+		order.tick();
+		if (order.finished()) {
+			setOrder(getNextOrder());
+		}
 
 		attemptMove();
 
-		if (xa == 0 || ya == 0) {
-			dira += ((random.nextDouble()) - (random.nextDouble()) * random.nextDouble()) * 0.4;
-		}
-
-		walkStep += speed / 100;
-		
 		if (burnTime > 0) {
-			FlameDebris fd = new FlameDebris(x +(random.nextDouble() - 0.5)*2, y + (random.nextDouble() - 0.5)*4, z + random.nextInt(12));
+			FlameDebris fd = new FlameDebris(x + (random.nextDouble() - 0.5) * 2, y + (random.nextDouble() - 0.5) * 4, z + random.nextInt(12));
 			fd.xa *= 0.1;
 			fd.ya *= 0.1;
 			fd.za *= 0.1;
@@ -199,7 +215,8 @@ public class Unit extends Mob {
 	public void render(Bitmap b) {
 		int xp = (int) x;
 		int yp = (int) (y - z);
-		
+
+
 		int frame = 0;
 
 		if (shootTime == 0) {
@@ -237,28 +254,9 @@ public class Unit extends Mob {
 			b.draw(sheet[frame][ySpriteIndex], xp - 8, yp - 15);
 		}
 		b.xFlip = false;
-		int dmg = (maxHealth - health) * 11 / maxHealth;
-		b.fill(xp - 5, yp - 16, xp + 5, yp - 16, 0xffff0000);
-		b.fill(xp - 5, yp - 16, xp + 5 - dmg, yp - 16, 0xff00ff00);
-		int ammo = (weapon.maxAmmoLoaded - weapon.ammoLoaded) * 11 / weapon.maxAmmoLoaded;
-		b.fill(xp - 5, yp - 15, xp + 5, yp - 15, 0xffffffff);
-		b.fill(xp - 5, yp - 15, xp + 5 - ammo, yp - 15, 0xffb0b0b0);
+
 	}
 
-	public static Unit create(int unitClass) {
-		Unit unit = null;
-		if (unitClass == UNIT_POLAND) unit = new Poland();
-		if (unitClass == UNIT_GERMANY) unit = new Germany();
-		if (unitClass == UNIT_NETHERLANDS) unit = new Netherlands();
-		if (unitClass == UNIT_FRANCE) unit = new France();
-		if (unitClass == UNIT_RUSSIA) unit = new Russia();
-		if (unitClass == UNIT_UKRAINE) unit = new Ukraine();
-		if (unitClass == UNIT_FINLAND) unit = new Finland();
-		if (unitClass == UNIT_JAPAN) unit = new Japan();
-		return unit;
-	}
-	
-	
 	public void handleExplosion(Bullet source, int dmg, double xd, double yd, double zd) {
 		if (this == source.owner) {
 			dmg /= 2; //at least a dmg reduction if you're dumb enough to shoot with rockets at your own mate
@@ -266,7 +264,7 @@ public class Unit extends Mob {
 			return;
 		}
 		hurt(dmg);
-		knockBack(xd*2, yd*2, zd*2);
+		knockBack(xd * 2, yd * 2, zd * 2);
 	}
 
 	public void die() {
@@ -275,5 +273,103 @@ public class Unit extends Mob {
 		}
 		weapon.playerDied();
 		remove();
+	}
+
+	public boolean intersectsScreenSpace(double x0, double y0, double x1, double y1) {
+		double xx = x;
+		double yy = y - z - 6;
+		int ww = 4;
+		int hh = 6;
+		if (x1 <= xx - ww || x0 > xx + ww || y1 <= yy - hh || y0 > yy + hh) return false;
+		return true;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+		order.init(this);
+	}
+
+	public Order getNextOrder() {
+		return new IdleOrder();
+	}
+
+	public void renderSelected(Bitmap screen) {
+		int xp = (int) x - 8;
+		int yp = (int) (y - z - 13); //OH GOD, I'm REALLY TIRED
+
+		//int r = 10;
+		//screen.box(xp - r, yp - r, xp + r, yp + r, 0xff00ff00);
+
+		screen.draw(Art.i.mouseCursor[1][0], xp, yp);
+		int dmg = (maxHealth - health) * 11 / maxHealth;
+		screen.fill(xp - 5 + 8, yp - 16 + 13, xp + 5 + 8, yp - 16 + 13, 0xffff0000);
+		screen.fill(xp - 5 + 8, yp - 16 + 13, xp + 5 - dmg + 8, yp - 16 + 13, 0xff00ff00);
+		int ammo = (weapon.maxAmmoLoaded - weapon.ammoLoaded) * 11 / weapon.maxAmmoLoaded;
+		screen.fill(xp - 5 + 8, yp - 15 + 13, xp + 5 + 8, yp - 15 + 13, 0xffffffff);
+		screen.fill(xp - 5 + 8, yp - 15 + 13, xp + 5 - ammo + 8, yp - 15 + 13, 0xffb0b0b0);
+	}
+
+	public double distanceToScreenSpaceSqr(double x0, double y0) {
+		double xx = x;
+		double yy = y - z - 6;
+
+		double xd = xx - x0;
+		double yd = yy - y0;
+
+		return xd * xd + yd * yd;
+	}
+
+	public double distanceTo(double x, double y) {
+		double xd = x - this.x;
+		double yd = y - this.y;
+
+		return Math.sqrt(xd * xd + yd * yd);
+	}
+
+	public double angleTo(double x, double y) {
+		return Math.atan2(y - this.y, x - this.x);
+	}
+
+	public void onRemove() {
+		level.units.remove(this);
+	}
+
+	public boolean turnTowards(double angle) {
+		while (dir < -Math.PI) dir += Math.PI * 2;
+		while (dir >= Math.PI) dir -= Math.PI * 2;
+		while (angle < -Math.PI) angle += Math.PI * 2;
+		while (angle >= Math.PI) angle -= Math.PI * 2;
+
+		double angleDiff = angle - dir;
+
+		while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+		while (angleDiff >= Math.PI) angleDiff -= Math.PI * 2;
+
+		double turnSpeed = 0.1;
+		double near = 1;
+
+		boolean wasAimed = angleDiff * angleDiff < near * near;
+		if (angleDiff < -turnSpeed) angleDiff = -turnSpeed;
+		if (angleDiff > +turnSpeed) angleDiff = +turnSpeed;
+
+		dir += angleDiff;
+
+		return wasAimed;
+
+	}
+
+	public void moveForwards() {
+		double moveSpeed = 0.2 * speed / 100;
+		if (!isOnGround()) {
+			moveSpeed *= 0.1;
+		}
+		xa += Math.cos(dir) * moveSpeed;
+		ya += Math.sin(dir) * moveSpeed;
+
+		walkStep += speed / 100;
+	}
+
+	private boolean isOnGround() {
+		return z <= 1;
 	}
 }

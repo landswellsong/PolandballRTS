@@ -7,6 +7,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+/**
+ * Basic input handler using three Interfaces to ensure full listening to mouse and key events and 
+ * gives these events to the Input class, which updates and processes these events
+ * */
+
 public class InputHandler implements MouseListener, MouseMotionListener, KeyListener {
 
 	private int xm, ym;

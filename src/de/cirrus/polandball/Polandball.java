@@ -14,37 +14,45 @@ import javax.swing.JFrame;
 
 import de.cirrus.polandball.entities.EntityListCache;
 import de.cirrus.polandball.level.Level;
-import de.cirrus.polandball.units.Unit;
 
-public class Polandball extends Canvas implements Runnable {
+
+/**
+ * This is the main class of the game. It uses a Runnable interface so the run() method uses its own cpu core,
+ * which is important. At the same time it's a canvas, which comes in handy for hardware accelerated graphics.
+ * And such. We could also use a JPanel but this would be inconvenient for several reasons as it lacks many
+ * features such as the buffer strategy and others.
+ * It also initializes everything important, updates the level, which by itself updates everything inside the game,
+ * creates the graphics context, sets up the window properties and calls the render methods.
+ * 
+ * */
+public class PolandBall extends Canvas implements Runnable {
+	
+	//Canvas specific variables
 	private static final long serialVersionUID = 1L;
-
 	public static final int SCALE = 3;
 	public static final int HEIGHT = 720/SCALE;
 	public static final int WIDTH = HEIGHT*16/9;
-	
-	
 	public static final String TITLE = "Polandball";
 
 	public Thread gameThread;
 
+	private BufferedImage image;
 	public Bitmap screenBitmap;
-	public Bitmap shadows;
 
 	public static JFrame frame;
 	public volatile boolean running = false;
 
-	private Level level;
-	private BufferedImage image;
+	public Game game;
+	public PlayerView playerView;
 
 	private Input mouse;
 	private InputHandler input;
-	
-	public Polandball() {
+
+	public PolandBall() {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-
+		
 		input = new InputHandler(this);
 	}
 
@@ -54,8 +62,8 @@ public class Polandball extends Canvas implements Runnable {
 		screenBitmap = new Bitmap(image);
 		mouse = input.updateMouseStatus(SCALE);
 		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB), new Point(0,0), "invisible"));
-		level = new Level(WIDTH, HEIGHT);
-		shadows = new Bitmap(WIDTH, HEIGHT);
+		game = new Game();
+		playerView = new PlayerView(game, game.players[0], mouse);
 	}
 
 	public synchronized void start() {
@@ -73,8 +81,11 @@ public class Polandball extends Canvas implements Runnable {
 		}
 	}
 
+
 	public void run() {
 		init();
+		
+		
 		double nsPerFrame = 1000000000D / 60D;
 		double unprocessedTime = 0;
 		double maxSkipFrame = 10;
@@ -83,6 +94,7 @@ public class Polandball extends Canvas implements Runnable {
 		long lastFrameTime = System.currentTimeMillis();
 		int frames = 0;
 		int ticks = 0;
+		
 		while (running) {
 			long now = System.nanoTime();
 			double passedTime = (now - lastTime) / nsPerFrame;
@@ -91,7 +103,7 @@ public class Polandball extends Canvas implements Runnable {
 			if (passedTime < -maxSkipFrame) passedTime = -maxSkipFrame;
 			if (passedTime > maxSkipFrame) passedTime = maxSkipFrame;
 
-			unprocessedTime += passedTime;
+			unprocessedTime += passedTime; //time to act
 
 			boolean render = true;
 
@@ -106,6 +118,7 @@ public class Polandball extends Canvas implements Runnable {
 
 			if (render) {
 				EntityListCache.reset();
+				//draw into the buffer
 				render(screenBitmap);
 				frames++;
 			}
@@ -118,7 +131,7 @@ public class Polandball extends Canvas implements Runnable {
 			}
 
 			try {
-				Thread.sleep(1);
+				Thread.sleep(2);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -127,7 +140,8 @@ public class Polandball extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-		level.tick();
+		game.tick();
+		playerView.tick();
 	}
 
 	private void swap() {
@@ -150,21 +164,17 @@ public class Polandball extends Canvas implements Runnable {
 	}
 
 	private void render(Bitmap screen) {
-		shadows.clear(0);
-
-		level.renderBg(screen);
-		level.renderShadows(shadows);
-		screen.shade(shadows);
-		level.renderSprites(screen);
+		playerView.render(screen);
 		if (mouse.onScreen) screen.draw(Art.i.mouseCursor[0][0], mouse.x - 1, mouse.y - 1);
 	}
 
 	public static void main(String[] args) {
-		Polandball game = new Polandball();
+		PolandBall gameComponent = new PolandBall();
+
 
 		frame = new JFrame(TITLE);
 		frame.setLayout(new BorderLayout());
-		frame.add(game);
+		frame.add(gameComponent);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
@@ -172,6 +182,6 @@ public class Polandball extends Canvas implements Runnable {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
-		game.start();
+		gameComponent.start();
 	}
 }

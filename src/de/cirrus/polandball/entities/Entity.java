@@ -94,5 +94,9 @@ public class Entity extends Sprite {
 	public void handleExplosion(Bullet source, int dmg, double xd, double yd, double zd){
 		
 	}
-	
+
+	public void onRemove() {
+
+	}
+
 }

@@ -1,12 +1,15 @@
-RTS + Poland as a main character
-Weapon upgrades
-AI with the blockmap as a node field
+Today we won't make more weapons or include more countries as this can be done anytime.
+We're going to improve the engine we have so far.
 
 
-Graphics: shadows, three dimensional (pseudo)
+We'll need to do some rearranging
 
 
-I have to think
+// brb toilet
 
-Isometric tiles?
-Revealable area?
+// I'm probably too tired to find the bug
+//@Chat: I don't get the question, install java, I even have a video that sets up this IDE, look it up
+
+
+THANKS FOR WATCHING!
+I'm uploading the game and committing now

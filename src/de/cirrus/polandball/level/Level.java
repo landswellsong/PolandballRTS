@@ -8,6 +8,7 @@ import java.util.TreeSet;
 import de.cirrus.polandball.Art;
 import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.Sprite;
+import de.cirrus.polandball.Team;
 import de.cirrus.polandball.entities.Bullet;
 import de.cirrus.polandball.entities.Entity;
 import de.cirrus.polandball.particles.Explosion;
@@ -24,7 +25,10 @@ public class Level {
 	public int xs, ys;
 	public Blockmap blockmap;
 
-	private Comparator<Sprite> spriteComparator = new Comparator<Sprite>() {
+	public List<Unit> units = new ArrayList<Unit>();
+
+
+	public Comparator<Sprite> spriteComparator = new Comparator<Sprite>() {
 		public int compare(Sprite s0, Sprite s1) {
 			if (s0.y + s0.x < s1.y + s1.x) return -1;
 			if (s0.y + s0.x > s1.y + s1.x) return 1;
@@ -42,7 +46,7 @@ public class Level {
 		this.w = w;
 		this.h = h;
 
-		blockmap = new Blockmap(w, h, 32);
+		blockmap = new Blockmap(w, h, 16);
 		
 		
 		xs = w / 8 + 1;
@@ -55,9 +59,58 @@ public class Level {
 		}
 		
 		for (int i = 0; i < 8; i++) {
-			Unit u = Unit.create(i);
+			Unit u = Unit.create(i, Team.allied);
 			u.x = 16;
-			u.y = 16 + i * 8;
+			u.y = 16 + i * 24;
+			add(u);
+		}
+
+		for (int i = 0; i < 8; i++) {
+			Unit u = Unit.create(i, Team.allied);
+			u.x = 24;
+			u.y = 16 + i * 24;
+			add(u);
+		}
+
+		for (int i = 0; i < 8; i++) {
+			Unit u = Unit.create(i, Team.allied);
+			u.x = 32;
+			u.y = 16 + i * 24;
+			add(u);
+		}
+
+		for (int i = 0; i < 8; i++) {
+			Unit u = Unit.create(i, Team.allied);
+			u.x = 48;
+			u.y = 16 + i * 24;
+			add(u);
+		}
+
+		for (int i = 0; i < 8; i++) {
+			Unit u = Unit.create(i, Team.soviet);
+			u.x = 64;
+			u.y = 16 + i * 24;
+			add(u);
+		}
+
+		for (int i = 0; i < 8; i++) {
+			Unit u = Unit.create(i, Team.soviet);
+			u.x = 128;
+			u.y = 16 + i * 24;
+			add(u);
+		}
+
+		for (int i = 0; i < 8; i++) {
+			Unit u = Unit.create(i, Team.soviet);
+			u.x = 256;
+			u.y = 16 + i * 24;
+			add(u);
+		}
+
+		for (int i = 0; i < 8; i++) {
+			Unit u = Unit.create(i, Team.soviet);
+			u.x = 512;
+			u.y = 16 + i * 24;
 			add(u);
 		}
 	}
@@ -84,6 +137,7 @@ public class Level {
 			if (!e.removed) e.tick();
 			if (e.removed) {
 				blockmap.remove(e);
+				e.onRemove();
 				entities.remove(i--);
 			} else {
 				blockmap.update(e);
@@ -115,16 +169,26 @@ public class Level {
 	}
 
 	public void renderShadows(Bitmap bm) {
-		TreeSet<Sprite> sortedSprites = new TreeSet<Sprite>(spriteComparator);
-		sortedSprites.addAll(entities);
-		sortedSprites.addAll(particles);
-		for (Sprite s : sortedSprites) {
+		for (Sprite s : entities) {
+			s.renderShadows(bm);
+		}
+		for (Sprite s : particles) {
 			s.renderShadows(bm);
 		}
 	}
 
 	public List<Entity> getEntities(double x0, double y0, double z0, double x1, double y1, double z1) {
 		return blockmap.getEntities(x0, y0, z0, x1, y1, z1);
+	}
+
+	public List<Unit> getUnitScreenSpace(double x0, double y0, double x1, double y1) {
+		List <Unit> result = new ArrayList<Unit>();
+		for (Unit u : units) {
+			if (u.intersectsScreenSpace(x0, y0, x1, y1)) {
+				result.add(u);
+			}
+		}
+		return result;
 	}
 
 	public void explode(Bullet rocket, double x, double y, double z, int dmg, double radius) {

@@ -10,7 +10,7 @@ public class Germany extends Unit {
 		
 		//Germany has the shortest range, so it has to have more life 
 		//still goes down quickly
-		health = maxHealth = 1500;
+		health = maxHealth = 150;
 	}
 
 }
