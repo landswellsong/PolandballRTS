@@ -1,0 +1,29 @@
+<project>
+    <!--    TODO: 
+            * fancy attributes
+            * dependances between targets
+            * switch ant over something else if Bernd wishes? -->
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes"/>
+    </target>
+
+    <target name="jar">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/PolandBall.jar">
+            <manifest>
+                <attribute name="Main-Class" value="de.cirrus.polandball.PolandBall"/>
+            </manifest>
+            <fileset dir="build/classes"/>
+            <fileset dir="res"/>
+        </jar>
+    </target>
+   
+    <target name="run">
+        <java jar="build/jar/PolandBall.jar" fork="true"/>
+    </target>
+</project>
