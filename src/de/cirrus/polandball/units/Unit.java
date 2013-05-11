@@ -259,7 +259,7 @@ public class Unit extends Mob {
 
 	public void handleExplosion(Bullet source, int dmg, double xd, double yd, double zd) {
 		if (this == source.owner) {
-			dmg /= 2; //at least a dmg reduction if you're dumb enough to shoot with rockets at your own mate
+			dmg /= 2;
 		} else if (team == source.owner.team) {
 			return;
 		}
@@ -295,7 +295,7 @@ public class Unit extends Mob {
 
 	public void renderSelected(Bitmap screen) {
 		int xp = (int) x - 8;
-		int yp = (int) (y - z - 13); //OH GOD, I'm REALLY TIRED
+		int yp = (int) (y - z - 13);
 
 		//int r = 10;
 		//screen.box(xp - r, yp - r, xp + r, yp + r, 0xff00ff00);

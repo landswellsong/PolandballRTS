@@ -27,7 +27,6 @@ public class Weapon {
 	public double maxRange = 200.0; // default
 	public double aimLead = 0.3;
 	
-	//complicated or not?
 	public double nearDistance = 0;
 	public double midDistance = 512;
 	public double farDistance = 1024;
@@ -35,8 +34,7 @@ public class Weapon {
 	public double highRamp = 175;
 	public double lowRamp = 50;
 	
-	//brb closet
-	
+
 	public Weapon(Unit owner) {
 		this.owner = owner;
 	}

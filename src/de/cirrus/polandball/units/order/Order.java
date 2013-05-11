@@ -23,6 +23,4 @@ public class Order {
 		return true;
 	}
 
-	//brb another beer
-	// :3 love it
 }

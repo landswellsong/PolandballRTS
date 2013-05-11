@@ -126,10 +126,6 @@ public class Level {
 		p.init(this);
 	}
 
-	// I'm really sorry guys, something removes them before they even get spawned :P
-	// I'll figure this out later, it's actually not THAT important, until we get into aiming
-	// for those who want the playlist, you can have it, brb!
-
 	public void tick() {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);

@@ -28,7 +28,7 @@ public class StickyBomb extends Bullet {
 		attemptMove();
 	}
 
-	public void renderShadow(Bitmap b) {
+	public void renderShadows(Bitmap b) {
 		int xp = (int) x;
 		int yp = (int) y;
 		b.fill(xp - 1, yp, xp, yp, 1);
@@ -61,7 +61,7 @@ public class StickyBomb extends Bullet {
 		if (owner.team == source.owner.team) {
 			return;
 		}
-		if (xa == 0 && ya == 0 && za == 0) { //flies away when exploding
+		if (xa == 0 && ya == 0 && za == 0) {
 			xa+=xd*0.5;
 			ya+=xd*0.5;
 			za+=Math.sqrt(xd*xd+yd*yd)*0.2;

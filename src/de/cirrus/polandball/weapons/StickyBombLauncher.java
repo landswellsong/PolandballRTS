@@ -22,7 +22,7 @@ public class StickyBombLauncher extends Weapon {
 		aimLead = 0;
 		
 		highRamp = 125;
-		lowRamp = 100; //50 is too mainstream
+		lowRamp = 100;
 	}
 	
 	public void shoot(double xa, double ya, double za) {

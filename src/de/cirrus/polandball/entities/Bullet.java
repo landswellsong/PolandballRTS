@@ -11,8 +11,7 @@ public class Bullet extends Entity {
 	public double xStart, yStart, zStart;
 	public int dmg;
 
-	// TODO specialize
-	
+
 	public Bullet(Unit owner, Weapon weapon, double xa, double ya, double za, int dmg) {
 		this(owner, weapon, xa, ya, za, dmg, 4);
 

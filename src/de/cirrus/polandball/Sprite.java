@@ -2,14 +2,6 @@ package de.cirrus.polandball;
 
 import de.cirrus.polandball.level.Level;
 
-/**
- * A pseudo abstract superclass for (almost) everything that is represented by a sprite, which means, a Bitmap object displayed
- * in the game.
- * It defines the basic methods every subclass should override and the most important and universal variables like the 
- * actual position in the game (x, y, z). Includes a reference to the Level class so it's accessable by every subclass.
- * 
- * 
- * */
 
 public class Sprite {
 	public boolean removed = false;

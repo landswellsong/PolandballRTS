@@ -16,7 +16,6 @@ public class Debris extends Particle {
 	public int icon = 0;
 	public double gravity = 0.20;
 
-	// TODO optimize
 	public Debris(double x, double y, double z) {
 		this.x = x;
 		this.y = y;

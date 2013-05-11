@@ -5,7 +5,6 @@ import java.util.List;
 import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.Sprite;
 
-//TODO aiming, input
 
 public class Entity extends Sprite {
 	public int xBlockCell, yBlockCell;

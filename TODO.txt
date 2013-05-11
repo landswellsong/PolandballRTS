@@ -1,15 +1,15 @@
-Today we won't make more weapons or include more countries as this can be done anytime.
-We're going to improve the engine we have so far.
+TODO:
 
 
-We'll need to do some rearranging
+-Level design (Sprite based isometric or simple tiles)
+-AI
+-UI
+-UDP server and client (?)
+
+I will make the level design and the AI completely by myself but it would be nice if someone takes the UI part.
+The server will be the last thing.
 
 
-// brb toilet
+Side-objectives: storyline? buildings? more like an adventure?
 
-// I'm probably too tired to find the bug
-//@Chat: I don't get the question, install java, I even have a video that sets up this IDE, look it up
-
-
-THANKS FOR WATCHING!
-I'm uploading the game and committing now
+Open for suggestions

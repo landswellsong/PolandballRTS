@@ -25,7 +25,7 @@ public class SniperRifle extends Weapon {
 		super.shoot(xa, ya, za);
 		double spread = 0.001;
 
-		for (int i = 0; i < 1; i++) { //Oh god
+		for (int i = 0; i < 1; i++) {
 			double xxa = xa + (random.nextDouble() - 0.5) * spread;
 			double yya = ya + (random.nextDouble() - 0.5) * spread;
 			double zza = za + (random.nextDouble() - 0.5) * spread * 0.5;

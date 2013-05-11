@@ -16,15 +16,6 @@ import de.cirrus.polandball.entities.EntityListCache;
 import de.cirrus.polandball.level.Level;
 
 
-/**
- * This is the main class of the game. It uses a Runnable interface so the run() method uses its own cpu core,
- * which is important. At the same time it's a canvas, which comes in handy for hardware accelerated graphics.
- * And such. We could also use a JPanel but this would be inconvenient for several reasons as it lacks many
- * features such as the buffer strategy and others.
- * It also initializes everything important, updates the level, which by itself updates everything inside the game,
- * creates the graphics context, sets up the window properties and calls the render methods.
- * 
- * */
 public class PolandBall extends Canvas implements Runnable {
 	
 	//Canvas specific variables
@@ -72,6 +63,7 @@ public class PolandBall extends Canvas implements Runnable {
 		gameThread.start();
 	}
 
+	@SuppressWarnings("unused")
 	public synchronized void stop() {
 		running = false;
 		try {
@@ -103,7 +95,7 @@ public class PolandBall extends Canvas implements Runnable {
 			if (passedTime < -maxSkipFrame) passedTime = -maxSkipFrame;
 			if (passedTime > maxSkipFrame) passedTime = maxSkipFrame;
 
-			unprocessedTime += passedTime; //time to act
+			unprocessedTime += passedTime;
 
 			boolean render = true;
 
@@ -118,7 +110,6 @@ public class PolandBall extends Canvas implements Runnable {
 
 			if (render) {
 				EntityListCache.reset();
-				//draw into the buffer
 				render(screenBitmap);
 				frames++;
 			}

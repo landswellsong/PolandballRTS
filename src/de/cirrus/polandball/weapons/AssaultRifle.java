@@ -22,7 +22,7 @@ public class AssaultRifle extends Weapon {
 		super.shoot(xa, ya, za);
 		double spread = 0.1;
 
-		for (int i = 0; i < 3; i++) { //in the army we learned that more than 3 shots with an assault rifle are just waste of ammo :3 burst fire that is
+		for (int i = 0; i < 3; i++) {
 			double xxa = xa + (random.nextDouble() - 0.5) * spread;
 			double yya = ya + (random.nextDouble() - 0.5) * spread;
 			double zza = za + (random.nextDouble() - 0.5) * spread * 0.5;

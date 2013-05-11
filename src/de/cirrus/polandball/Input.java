@@ -4,13 +4,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Basic input class,  which defines what a Key is and how it is bound
- * Relies on the InputHandler for the events
- * */
-
-// what the fuck is a module
-
 
 public class Input {
 	public static class Key {
@@ -65,7 +58,7 @@ public class Input {
 	public Key right = new Key(this).bind(KeyEvent.VK_RIGHT).bind(KeyEvent.VK_D);
 
 	
-	//TODO: Unit bindings here
+	//TODO: bindings here
 	
 	public Input() {
 	}

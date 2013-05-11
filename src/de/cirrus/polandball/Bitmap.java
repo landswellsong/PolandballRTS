@@ -64,7 +64,7 @@ public class Bitmap {
 
 				for (int x = x0; x < x1; x++) {
 					int c = b.pixels[sp + x]; 
-					if (c < 0) pixels[dp + x] = b.pixels[sp + x]; //colour codes are negative int values, it's has cpu architectural reasons
+					if (c < 0) pixels[dp + x] = b.pixels[sp + x];
 				}
 			}
 		}
@@ -91,8 +91,8 @@ public class Bitmap {
 
 				for (int x = x0; x < x1; x++) {
 					int c = b.pixels[sp - x];
-					if (c < 0) pixels[dp + x] = ((b.pixels[sp - x] & 0xfefefefe) /* make every pixel transparent*/ 
-							+ (col & 0xfefefefe))/* and add the col value to its bits*/ >> 1; 
+					if (c < 0) pixels[dp + x] = ((b.pixels[sp - x] & 0xfefefefe)
+							+ (col & 0xfefefefe))>> 1;
 				}
 			}
 		} else {
@@ -161,5 +161,4 @@ public class Bitmap {
 			}
 		}
 	}
-	//programming drunk sucks :P
 }
