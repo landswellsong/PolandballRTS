@@ -51,7 +51,7 @@ public class Input {
 	
 	
 	public List<Key> keys = new ArrayList<Key>();
-	//how many units will there be in the end anyway?
+
 	public Key up = new Key(this).bind(KeyEvent.VK_UP).bind(KeyEvent.VK_W);
 	public Key down = new Key(this).bind(KeyEvent.VK_DOWN).bind(KeyEvent.VK_S);
 	public Key left = new Key(this).bind(KeyEvent.VK_LEFT).bind(KeyEvent.VK_A);
