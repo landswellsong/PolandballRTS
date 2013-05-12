@@ -7,6 +7,8 @@ TODO:
 -UDP server and client (?)
 
 I will make the level design and the AI completely by myself but it would be nice if someone takes the UI part.
+ I can do that, but I'd need mockups on how you intend it too look/work. t. landswellsong
+ 
 The server will be the last thing.
 
 
