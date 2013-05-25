@@ -7,6 +7,8 @@ public class Japan extends Mob {
 
 	public Japan(Player player) {
 		super(7, player);
+
+		health = 1;
 		weapon = new Minigun(this);
 	}
 

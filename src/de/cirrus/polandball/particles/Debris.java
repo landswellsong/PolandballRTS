@@ -63,7 +63,7 @@ public class Debris extends Particle {
 		b.fill(xp - 1, yp, xp, yp, 1);
 	}
 
-	private Bitmap getBitmap() {
+	public Bitmap getBitmap() {
 		return Art.i.particles[icon % 8][icon / 8];
 	}
 
