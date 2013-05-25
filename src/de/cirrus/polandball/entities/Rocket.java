@@ -3,13 +3,14 @@ package de.cirrus.polandball.entities;
 import de.cirrus.polandball.Art;
 import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.particles.FlameDebris;
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 import de.cirrus.polandball.weapons.Weapon;
 
 public class Rocket extends Bullet {
 	public int speed = 1;
 	
-	public Rocket(Unit owner, Weapon weapon, double xa, double ya, double za, int dmg) {
+	public Rocket(Mob owner, Weapon weapon, double xa, double ya, double za, int dmg) {
 		super(owner, weapon, xa, ya, za, dmg);
 		this.xa = xa * speed;
 		this.ya = ya * speed;
@@ -42,16 +43,11 @@ public class Rocket extends Bullet {
 		attemptMove();
 	}
 	
-	public void renderShadows(Bitmap b) {
-		int xp = (int) x;
-		int yp = (int) y;
-		
+	public void renderShadows(Bitmap b, int xp, int yp) {
 		b.fill(xp - 1, yp, xp, yp, 1);
 	}
 	
-	public void render(Bitmap b){
-		int xp = (int) x;
-		int yp = (int) (y - z);
+	public void render(Bitmap b, int xp, int yp){
 		int frame = (int) Math.floor(-Math.atan2(ya, xa) * 16 / (Math.PI*2) + 4.5) & 7;
 		b.draw(Art.i.projectiles[frame][0], xp - 4, yp - 4);
 	}

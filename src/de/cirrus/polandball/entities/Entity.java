@@ -58,9 +58,7 @@ public class Entity extends Sprite {
 
 
 
-	public void renderShadows(Bitmap b) {
-		int xp = (int) x;
-		int yp = (int) y;
+	public void renderShadows(Bitmap b, int xp, int yp) {
 
 		b.fill(xp - 3, yp - 4, xp + 1, yp - 4, 1);
 		b.fill(xp - 5, yp - 3, xp + 3, yp - 3, 1);
@@ -94,7 +92,7 @@ public class Entity extends Sprite {
 		
 	}
 
-	public void onRemove() {
+	public void onRemoved() {
 
 	}
 

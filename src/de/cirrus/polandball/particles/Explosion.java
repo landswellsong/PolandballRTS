@@ -46,11 +46,11 @@ public class Explosion extends Particle {
 		}
 	}
 
-	public void render(Bitmap b) {
+	public void render(Bitmap b, int xp, int yp) {
 
 	}
 
-	public void renderShadows(Bitmap b) {
+	public void renderShadows(Bitmap b, int xp, int yp) {
 
 	}
 }

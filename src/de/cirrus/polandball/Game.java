@@ -9,9 +9,10 @@ public class Game {
 	private Bitmap shadows;
 
 	public Game() {
-		level = new Level(512, 512);
-		players[0] = new Player(Team.allied);
-		players[1] = new Player(Team.soviet);
+		players[0] = new Player(Team.allied, level);
+		players[1] = new Player(Team.soviet, level);
+		level = new Level(512, 512, players);
+
 	}
 
 	public void tick() {

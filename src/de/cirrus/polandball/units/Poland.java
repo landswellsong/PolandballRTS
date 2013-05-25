@@ -1,5 +1,6 @@
 package de.cirrus.polandball.units;
 
+import de.cirrus.polandball.Player;
 import de.cirrus.polandball.weapons.Revolver;
 
 /**
@@ -7,11 +8,11 @@ import de.cirrus.polandball.weapons.Revolver;
  * 
  * */
 
-public class Poland extends Unit {
+public class Poland extends Mob {
 
 	
-	public Poland() {
-		super(0);
+	public Poland(Player player) {
+		super(0, player);
 		weapon = new Revolver(this);
 	}
 

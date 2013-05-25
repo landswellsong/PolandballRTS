@@ -2,13 +2,14 @@ package de.cirrus.polandball.entities;
 
 import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.particles.FlameDebris;
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 import de.cirrus.polandball.weapons.Weapon;
 
 public class FlameBullet extends Bullet {
 	private int life = 0;
 
-	public FlameBullet(Unit owner, Weapon weapon, double xa, double ya, double za, int dmg) {
+	public FlameBullet(Mob owner, Weapon weapon, double xa, double ya, double za, int dmg) {
 		super(owner, weapon, xa, ya, za, dmg);
 		this.xa = xa * 0.5;
 		this.ya = ya * 0.5;
@@ -49,21 +50,21 @@ public class FlameBullet extends Bullet {
 		attemptMove();
 	}
 
-	public void render(Bitmap b) {
+	public void render(Bitmap b, int xp, int yp) {
 
 	}
 
-	public void renderShadows(Bitmap b) {
+	public void renderShadows(Bitmap b, int xp, int yp) {
 
 	}
-	
+
 	public void collide(Entity e, double xxa, double yya, double zza) {
 		if (e != null) {
 			e.hitBy(this);
 		}
 		remove();
 	}
-	
+
 	public void applyHitEffect(Unit unit) {
 		unit.burnTime = 60 * 10;
 	}

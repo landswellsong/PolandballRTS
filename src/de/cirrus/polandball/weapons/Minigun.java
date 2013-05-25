@@ -1,11 +1,12 @@
 package de.cirrus.polandball.weapons;
 
 import de.cirrus.polandball.entities.Bullet;
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 
 public class Minigun extends Weapon {
 	
-	public Minigun(Unit owner) {
+	public Minigun(Mob owner) {
 		super(owner);
 		
 		ammoLoaded = maxAmmoLoaded = 200 * 4;

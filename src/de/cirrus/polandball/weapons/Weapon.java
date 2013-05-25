@@ -2,12 +2,13 @@ package de.cirrus.polandball.weapons;
 
 import java.util.Random;
 
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 
 public class Weapon {
 	public static final Random random = new Random();
 	
-	public Unit owner;
+	public Mob owner;
 	
 	public int maxAmmoLoaded;
 	public int maxAmmoCarried;
@@ -35,7 +36,7 @@ public class Weapon {
 	public double lowRamp = 50;
 	
 
-	public Weapon(Unit owner) {
+	public Weapon(Mob owner) {
 		this.owner = owner;
 	}
 	

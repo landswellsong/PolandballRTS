@@ -2,13 +2,15 @@ package de.cirrus.polandball.entities;
 
 import de.cirrus.polandball.Art;
 import de.cirrus.polandball.Bitmap;
+import de.cirrus.polandball.Team;
 import de.cirrus.polandball.particles.SmokeDebris;
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 import de.cirrus.polandball.weapons.Weapon;
 
 public class StickyBomb extends Bullet {
 
-	public StickyBomb(Unit owner, Weapon weapon, double xa, double ya, double za, int dmg) {
+	public StickyBomb(Mob owner, Weapon weapon, double xa, double ya, double za, int dmg) {
 		super(owner, weapon, xa, ya, za, dmg);
 		this.xa = xa * 1;
 		this.ya = ya * 1;
@@ -28,17 +30,14 @@ public class StickyBomb extends Bullet {
 		attemptMove();
 	}
 
-	public void renderShadows(Bitmap b) {
-		int xp = (int) x;
-		int yp = (int) y;
+	public void renderShadows(Bitmap b, int xp, int yp) {
 		b.fill(xp - 1, yp, xp, yp, 1);
 	}
 
-	public void render(Bitmap b) {
-		int xp = (int) x;
-		int yp = (int) (y - z);
+	public void render(Bitmap b, int xp, int yp) {
 		int frame = 0;
 		if (xa == 0 && ya == 0 && za == 0) frame = 1;
+		if (owner.team == Team.soviet) frame+=2;
 		b.draw(Art.i.projectiles[frame][1], xp - 4, yp - 4);
 	}
 

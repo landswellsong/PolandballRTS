@@ -1,5 +1,7 @@
 package de.cirrus.polandball;
 
+import de.cirrus.polandball.level.Level;
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 import de.cirrus.polandball.units.order.MoveOrder;
 
@@ -8,18 +10,18 @@ import java.util.List;
 
 public class Player {
 	public Team team;
-	public List<Unit> selected = new ArrayList<Unit>();
+	public Level level;
+	public List<Mob> selected = new ArrayList<Mob>();
 
-	public Player(Team team) {
+	public Player(Team team, Level level) {
+		this.level = level;
 		this.team = team;
 	}
 
 	public void sendAllSelectedTo(int x, int y) {
-		for (Unit unit : selected) {
+		for (Mob unit : selected) {
 			unit.setOrder(new MoveOrder(x, y));
 		}
 	}
-
-	//TODO Synchronize input actions
 
 }

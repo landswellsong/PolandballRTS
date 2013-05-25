@@ -7,12 +7,14 @@ import java.util.TreeSet;
 
 import de.cirrus.polandball.Art;
 import de.cirrus.polandball.Bitmap;
+import de.cirrus.polandball.Player;
 import de.cirrus.polandball.Sprite;
 import de.cirrus.polandball.Team;
 import de.cirrus.polandball.entities.Bullet;
 import de.cirrus.polandball.entities.Entity;
 import de.cirrus.polandball.particles.Explosion;
 import de.cirrus.polandball.particles.Particle;
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 
 public class Level {
@@ -27,6 +29,8 @@ public class Level {
 
 	public List<Unit> units = new ArrayList<Unit>();
 
+	public Player one;
+	public Player two;
 
 	public Comparator<Sprite> spriteComparator = new Comparator<Sprite>() {
 		public int compare(Sprite s0, Sprite s1) {
@@ -42,9 +46,12 @@ public class Level {
 		}
 	};
 
-	public Level(int w, int h) {
+	public Level(int w, int h, Player[]players) {
 		this.w = w;
 		this.h = h;
+
+		one = players[0];
+		two = players[1];
 
 		blockmap = new Blockmap(w, h, 16);
 		
@@ -58,58 +65,14 @@ public class Level {
 			tiles[i] = 0;
 		}
 		
-		for (int i = 0; i < 8; i++) {
-			Unit u = Unit.create(i, Team.allied);
+		for (int i = 0; i < 9; i++) {
+			Mob u = Mob.create(i, one);
 			u.x = 16;
 			u.y = 16 + i * 24;
 			add(u);
-		}
 
-		for (int i = 0; i < 8; i++) {
-			Unit u = Unit.create(i, Team.allied);
-			u.x = 24;
-			u.y = 16 + i * 24;
-			add(u);
-		}
-
-		for (int i = 0; i < 8; i++) {
-			Unit u = Unit.create(i, Team.allied);
-			u.x = 32;
-			u.y = 16 + i * 24;
-			add(u);
-		}
-
-		for (int i = 0; i < 8; i++) {
-			Unit u = Unit.create(i, Team.allied);
-			u.x = 48;
-			u.y = 16 + i * 24;
-			add(u);
-		}
-
-		for (int i = 0; i < 8; i++) {
-			Unit u = Unit.create(i, Team.soviet);
-			u.x = 64;
-			u.y = 16 + i * 24;
-			add(u);
-		}
-
-		for (int i = 0; i < 8; i++) {
-			Unit u = Unit.create(i, Team.soviet);
-			u.x = 128;
-			u.y = 16 + i * 24;
-			add(u);
-		}
-
-		for (int i = 0; i < 8; i++) {
-			Unit u = Unit.create(i, Team.soviet);
-			u.x = 256;
-			u.y = 16 + i * 24;
-			add(u);
-		}
-
-		for (int i = 0; i < 8; i++) {
-			Unit u = Unit.create(i, Team.soviet);
-			u.x = 512;
+			u = Mob.create(i, two);
+			u.x = (720/3)*16/9 - 16;
 			u.y = 16 + i * 24;
 			add(u);
 		}
@@ -133,7 +96,7 @@ public class Level {
 			if (!e.removed) e.tick();
 			if (e.removed) {
 				blockmap.remove(e);
-				e.onRemove();
+				e.onRemoved();
 				entities.remove(i--);
 			} else {
 				blockmap.update(e);

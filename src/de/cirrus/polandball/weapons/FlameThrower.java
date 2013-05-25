@@ -1,11 +1,12 @@
 package de.cirrus.polandball.weapons;
 
 import de.cirrus.polandball.entities.FlameBullet;
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 
 public class FlameThrower extends Weapon {
 
-	public FlameThrower(Unit owner) {
+	public FlameThrower(Mob owner) {
 		super(owner);
 		ammoLoaded = maxAmmoLoaded = 200;
 		ammoCarried = maxAmmoCarried = 0;

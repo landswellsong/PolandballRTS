@@ -1,6 +1,5 @@
 package de.cirrus.polandball.units.order;
 
-import de.cirrus.polandball.units.Unit;
 
 /**
  * User: Cirrus

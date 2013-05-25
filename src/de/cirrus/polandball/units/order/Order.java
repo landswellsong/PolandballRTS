@@ -1,6 +1,6 @@
 package de.cirrus.polandball.units.order;
 
-import de.cirrus.polandball.units.Unit;
+import de.cirrus.polandball.units.Mob;
 
 /**
  * User: Cirrus
@@ -9,9 +9,9 @@ import de.cirrus.polandball.units.Unit;
  * ZERE MUST BE ORDER
  */
 public class Order {
-	Unit unit;
+	public Mob unit;
 
-	public void init (Unit unit) {
+	public void init (Mob unit) {
 		this.unit = unit;
 	}
 

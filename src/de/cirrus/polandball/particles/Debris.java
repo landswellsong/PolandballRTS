@@ -54,15 +54,11 @@ public class Debris extends Particle {
 		attemptMove();
 	}
 
-	public void render(Bitmap b) {
-		int xp = (int) x;
-		int yp = (int) (y - z);
+	public void render(Bitmap b, int xp, int yp) {
 		b.draw(getBitmap(), xp - 4, yp - 4);
 	}
 
-	public void renderShadows(Bitmap b) {
-		int xp = (int) x;
-		int yp = (int) y;
+	public void renderShadows(Bitmap b, int xp, int yp) {
 
 		b.fill(xp - 1, yp, xp, yp, 1);
 	}

@@ -1,7 +1,6 @@
 package de.cirrus.polandball;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
+import java.awt.image.*;
 import java.util.Arrays;
 
 
@@ -10,14 +9,14 @@ public class Bitmap {
 	public final int w, h;
 	public int xOffs, yOffs;
 	public boolean xFlip;
-	
+
 
 	public Bitmap(int w, int h) {
 		this.w = w;
 		this.h = h;
-		pixels = new int[w*h];
+		pixels = new int[w * h];
 	}
-	
+
 	public Bitmap(int w, int h, int[] pixels) {
 		this.w = w;
 		this.h = h;
@@ -28,25 +27,24 @@ public class Bitmap {
 		this.w = img.getWidth();
 		this.h = img.getHeight();
 
-		pixels = ((DataBufferInt)img.getRaster().getDataBuffer()).getData();
+		pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
 	}
-
 
 	public void draw(Bitmap b, int xp, int yp) {
 		xp += xOffs;
 		yp += yOffs;
-		
+
 		int x0 = xp;
 		int x1 = xp + b.w;
 		int y0 = yp;
 		int y1 = yp + b.h;
-		
+
 		if (x0 < 0) x0 = 0;
 		if (y0 < 0) y0 = 0;
 		if (x1 > w) x1 = w;
 		if (y1 > h) y1 = h;
 
-		
+
 		if (xFlip) {
 			for (int y = y0; y < y1; y++) {
 				int sp = (y - yp) * b.w + xp + b.w - 1;
@@ -63,14 +61,12 @@ public class Bitmap {
 				int dp = (y) * w;
 
 				for (int x = x0; x < x1; x++) {
-					int c = b.pixels[sp + x]; 
+					int c = b.pixels[sp + x];
 					if (c < 0) pixels[dp + x] = b.pixels[sp + x];
 				}
 			}
 		}
 	}
-	
-	
 
 	public void blendDraw(Bitmap b, int xp, int yp, int col) {
 		xp += xOffs;
@@ -92,7 +88,7 @@ public class Bitmap {
 				for (int x = x0; x < x1; x++) {
 					int c = b.pixels[sp - x];
 					if (c < 0) pixels[dp + x] = ((b.pixels[sp - x] & 0xfefefefe)
-							+ (col & 0xfefefefe))>> 1;
+							+ (col & 0xfefefefe)) >> 1;
 				}
 			}
 		} else {
@@ -116,11 +112,10 @@ public class Bitmap {
 		}
 
 	}
-	
+
 	public void clear(int color) {
 		Arrays.fill(pixels, color);
 	}
-
 
 	public void shade(Bitmap shadows) {
 		for (int i = 0; i < pixels.length; i++) {
@@ -134,19 +129,10 @@ public class Bitmap {
 	}
 
 	public void fill(int x0, int y0, int x1, int y1, int color) {
-		if (x0 < 0) x0 = 0;
-		if (y0 < 0) y0 = 0;
-		if (x1 >= w) x1 = w - 1;
-		if (y1 >= h) y1 = h - 1;
-		
-		for (int y=y0; y<=y1; y++) {
-			for (int x=x0; x<=x1; x++) {
-				pixels[x+y*w] = color;
-			}
-		}
-	}
-
-	public void box(int x0, int y0, int x1, int y1, int color) {
+		x0 += xOffs;
+		x1 += xOffs;
+		y0 += xOffs;
+		y1 += xOffs;
 		if (x0 < 0) x0 = 0;
 		if (y0 < 0) y0 = 0;
 		if (x1 >= w) x1 = w - 1;
@@ -155,8 +141,32 @@ public class Bitmap {
 		for (int y = y0; y <= y1; y++) {
 			for (int x = x0; x <= x1; x++) {
 				pixels[x + y * w] = color;
-				if (y > y0 && y < y1 && x < x1 - 1) {
-					x = x1 - 1;
+			}
+		}
+	}
+
+	public void box(int x0, int y0, int x1, int y1, int color) {
+		x0 += xOffs;
+		x1 += xOffs;
+		y0 += xOffs;
+		y1 += xOffs;
+
+		int xx0 = x0;
+		int yy0 = y0;
+		int xx1 = x1;
+		int yy1 = y1;
+
+
+		if (x0 < 0) x0 = 0;
+		if (y0 < 0) y0 = 0;
+		if (x1 >= w) x1 = w - 1;
+		if (y1 >= h) y1 = h - 1;
+
+		for (int y = y0; y <= y1; y++) {
+			for (int x = x0; x <= x1; x++) {
+				if (x == xx0 || y == yy0 || x == xx1 || y == yy1) pixels[x + y * w] = color;
+				if (y > yy0 && y < yy1 && x < xx1 - 1) {
+					x = xx1 - 1;
 				}
 			}
 		}

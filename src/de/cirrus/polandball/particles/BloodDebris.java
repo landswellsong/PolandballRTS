@@ -12,9 +12,7 @@ public class BloodDebris extends Debris {
 		icon = 1;
 	}
 
-	public void renderShadows(Bitmap b) {
-		int xp = (int) x;
-		int yp = (int) y;
+	public void renderShadows(Bitmap b, int xp, int yp) {
 		b.fill(xp, yp, xp, yp, 1);
 	}
 }

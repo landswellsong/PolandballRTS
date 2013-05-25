@@ -16,7 +16,7 @@ public class SmokeDebris extends Debris {
 	}
 	
 	
-	public void renderShadows(Bitmap b) {
+	public void renderShadows(Bitmap b, int xp, int yp) {
 		
 	}
 }

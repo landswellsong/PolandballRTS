@@ -1,11 +1,12 @@
 package de.cirrus.polandball.units;
 
+import de.cirrus.polandball.Player;
 import de.cirrus.polandball.weapons.Minigun;
 
-public class Japan extends Unit {
+public class Japan extends Mob {
 
-	public Japan() {
-		super(7);
+	public Japan(Player player) {
+		super(7, player);
 		weapon = new Minigun(this);
 	}
 

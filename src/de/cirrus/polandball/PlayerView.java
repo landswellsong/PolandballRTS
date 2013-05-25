@@ -1,5 +1,6 @@
 package de.cirrus.polandball;
 
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 
 import java.util.TreeSet;
@@ -11,35 +12,34 @@ import java.util.TreeSet;
  */
 public class PlayerView {
 	private static final int SELECT_REGION_DISTANCE = 4;
-	private static final int SELECT_RADIUS = 8;
 	public Game game;
 	public Player player;
-	public Input mouse;
+	public Input input;
 
 	public boolean selecting;
 	public int xStartSelect;
 	public int yStartSelect;
 
-	public PlayerView(Game game, Player player, Input mouse) {
+	public PlayerView(Game game, Player player, Input input) {
 		this.game = game;
 		this.player = player;
-		this.mouse = mouse;
+		this.input = input;
 	}
 
 	public void tick() {
-		if (mouse.b0Clicked) {
+		if (input.b0Clicked) {
 			selecting = true;
-			xStartSelect = mouse.x;
-			yStartSelect = mouse.y;
+			xStartSelect = input.x;
+			yStartSelect = input.y;
 		}
 
-		if (mouse.b1Clicked) {
-			player.sendAllSelectedTo(mouse.x, mouse.y);
+		if (input.b1Clicked) {
+			player.sendAllSelectedTo(input.x, input.y);
 
 		}
-		if (mouse.b0Released) {
+		if (input.b0Released) {
 			if (hasDraggedBox()) {
-				selectAll(xStartSelect, yStartSelect, mouse.x, mouse.y);
+				selectAll(xStartSelect, yStartSelect, input.x, input.y);
 			} else {
 				selectNearest(xStartSelect, yStartSelect);
 			}
@@ -71,8 +71,8 @@ public class PlayerView {
 					nearest = u;
 			}
 		}
-		if (nearest != null) {
-			player.selected.add(nearest);
+		if (nearest != null && nearest instanceof Mob) {
+			player.selected.add((Mob)nearest);
 		}
 
 	}
@@ -94,9 +94,9 @@ public class PlayerView {
 		player.selected.clear();
 
 		for (Unit u : game.level.getUnitScreenSpace(x0 - r, y0 - r, x1 + r, y1 + r)) {
-			System.out.println(u.toString());
 			if (u.team == player.team) {
-				player.selected.add(u);
+				if (u instanceof Mob)
+				player.selected.add((Mob)u);
 			}
 		}
 	}
@@ -114,13 +114,13 @@ public class PlayerView {
 		game.renderSprites(screen);
 
 		if (selecting && hasDraggedBox()) {
-			drawSelectBox(screen, xStartSelect, yStartSelect, mouse.x, mouse.y);
+			drawSelectBox(screen, xStartSelect, yStartSelect, input.x, input.y);
 		}
 	}
 
 	private boolean hasDraggedBox() {
-		int xd = xStartSelect - mouse.x;
-		int yd = yStartSelect - mouse.y;
+		int xd = xStartSelect - input.x;
+		int yd = yStartSelect - input.y;
 		if (xd < 0) xd = -xd;
 		if (yd < 0) yd = -yd;
 		int d = xd > yd ? xd : yd;

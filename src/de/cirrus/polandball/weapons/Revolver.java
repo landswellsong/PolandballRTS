@@ -1,11 +1,12 @@
 package de.cirrus.polandball.weapons;
 
 import de.cirrus.polandball.entities.Bullet;
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 
 public class Revolver extends Weapon {
 
-	public Revolver(Unit owner) {
+	public Revolver(Mob owner) {
 		super(owner);
 		ammoLoaded = maxAmmoLoaded = 6;
 		ammoCarried = maxAmmoCarried = 24;

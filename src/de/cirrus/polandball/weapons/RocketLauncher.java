@@ -1,11 +1,12 @@
 package de.cirrus.polandball.weapons;
 
 import de.cirrus.polandball.entities.Rocket;
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 
 public class RocketLauncher extends Weapon {
 
-	public RocketLauncher(Unit owner) {
+	public RocketLauncher(Mob owner) {
 		super(owner);
 		ammoLoaded = maxAmmoLoaded = 4;
 		ammoCarried = maxAmmoCarried = 20;

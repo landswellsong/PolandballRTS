@@ -32,12 +32,12 @@ public class FlameDebris extends Debris {
 		}
 	}
 
-	public void render(Bitmap b) {
+	public void render(Bitmap b, int xp, int yp) {
 		icon = 8 * 2 + 3 - 4 * life / maxLife;
-		super.render(b);
+		super.render(b, xp, yp);
 	}
 
-	public void renderShadows(Bitmap b) {
+	public void renderShadows(Bitmap b, int xp, int yp) {
 	}
 
 	

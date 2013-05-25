@@ -21,3 +21,20 @@ The server will be the last thing.
 Side-objectives: storyline? buildings? more like an adventure?
 
 Open for suggestions
+
+
+GOOD EVENING EVERYONE
+Today, I have no idea yet what to do, but we'll find out :3
+I need a few minutes to catch myself and get a review back of the code
+
+
+Ah well, we'll have to do a lot of restructuring today I guess
+
+I'm separating the Unit and Mob class.
+It'll take a while to consent on how to do it
+See the playlist if you want, brb
+re :3
+
+
+fucking oracle
+sometimes the reference to an old object still exists

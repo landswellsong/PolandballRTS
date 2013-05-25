@@ -1,11 +1,12 @@
 package de.cirrus.polandball.weapons;
 
 import de.cirrus.polandball.entities.Bullet;
+import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 
 public class SniperRifle extends Weapon {
 	
-	public SniperRifle(Unit owner) {
+	public SniperRifle(Mob owner) {
 		super(owner);
 		
 		ammoLoaded = maxAmmoLoaded = 25;
