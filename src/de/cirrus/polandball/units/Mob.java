@@ -190,8 +190,7 @@ public class Mob extends Unit {
 		double r = weapon.maxRange;
 		List<Entity> es = level.getEntities(x - r, y - r, z - r, x + r, y + r, z + r);
 		Entity closest = null;
-		for (int i = 0; i < es.size(); i++) {
-			Entity e = es.get(i);
+		for (Entity e : es) {
 			if (e instanceof Mob && e != this) {
 				Mob u = (Mob) e;
 				if (u.isAlive() && u.distanceToSqr(this) < r * r && isLegalTarget(u)) {
@@ -199,6 +198,7 @@ public class Mob extends Unit {
 						closest = e;
 					} else if (e.distanceToSqr(this) < closest.distanceToSqr(this)) {
 						closest = e;
+
 					}
 				}
 			}
@@ -212,7 +212,7 @@ public class Mob extends Unit {
 		int frame = 0;
 
 		if (shootTime == 0) {
-			int dirFrame = (int) (Math.floor(-dir * 4 / (Math.PI * 2) - 3)) & 3;
+			int dirFrame = (int) (Math.floor(-dir * 4 / (Math.PI * 2) - 2.5)) & 3;
 			if (dirFrame == 0) frame = 0;
 			if (dirFrame == 1) frame = 3;
 			if (dirFrame == 2) frame = 6;
@@ -231,7 +231,7 @@ public class Mob extends Unit {
 				if (walkFrame == 3) frame += 2;
 			}
 		} else {
-			int dirFrame = (int) (-Math.floor(aimDir * 8 / (Math.PI * 2) - 0.5)) & 7;
+			int dirFrame = (int) (-Math.floor(aimDir * 8 / (Math.PI * 2) - 1.5)) & 7;
 			frame = dirFrame + 9;
 			if (dirFrame > 4) {
 				frame = 9 + 3 - (dirFrame - 5);
@@ -295,13 +295,13 @@ public class Mob extends Unit {
 	public void renderStats(Bitmap screen) {
 		int xp = (int) x;
 		int yp = (int) (y - z);
-		int dmg = (maxHealth - health) * 11 / maxHealth;
+		int dmg = (maxHealth - health) * 16 / maxHealth;
 		screen.fill(xp - 8, yp - 18, xp + 8, yp - 18, 0xffff0000);
 		screen.fill(xp - 8, yp - 18, xp + 8 - dmg, yp - 18, 0xff00ff00);
 		if (weapon.maxAmmoLoaded > 0) {
 			int ammo = (weapon.maxAmmoLoaded - weapon.ammoLoaded) * 11 / weapon.maxAmmoLoaded;
 			screen.fill(xp - 8, yp - 17, xp + 8, yp - 17, 0xff000000);
-			screen.fill(xp - 8, yp - 17, xp + 8 - ammo, yp - 17, 0xffffcdb0);
+			screen.fill(xp - 8, yp - 17, xp + 8 - ammo, yp - 17, 0xffffcd00);
 		}
 
 	}
@@ -324,6 +324,7 @@ public class Mob extends Unit {
 		walkStep += speed / 100;
 	}
 
+	@SuppressWarnings("unused")
 	public void jump() {
 		za -= 1.5; // :3
 	}

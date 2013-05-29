@@ -62,7 +62,7 @@ public class Healwind extends Particle {
 	}
 
 	public void render(Bitmap b, int xp, int yp) {
-		b.blendDraw(Art.i.particles[from.team == Team.soviet ? 0 : 1][3], xp - 4, yp - 4, 0x10101  * br >> 3);
+		b.blendDraw(Art.i.particles[from.team == Team.soviet ? 0 : 1][3], xp - 4, yp - 4, ((0x10101  * br) | 0xff000000) << 3);
 	}
 
 	public void renderShadows(Bitmap b, int xp, int yp) {

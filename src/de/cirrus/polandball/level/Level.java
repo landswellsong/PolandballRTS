@@ -1,15 +1,9 @@
 package de.cirrus.polandball.level;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeSet;
-
 import de.cirrus.polandball.Art;
 import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.Player;
 import de.cirrus.polandball.Sprite;
-import de.cirrus.polandball.Team;
 import de.cirrus.polandball.entities.Bullet;
 import de.cirrus.polandball.entities.Entity;
 import de.cirrus.polandball.particles.Explosion;
@@ -17,9 +11,15 @@ import de.cirrus.polandball.particles.Particle;
 import de.cirrus.polandball.units.Mob;
 import de.cirrus.polandball.units.Unit;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
+import java.util.TreeSet;
+
 public class Level {
-	public List<Entity> entities = new ArrayList<Entity>();
-	public List<Particle> particles = new ArrayList<Particle>();
+	public List<Entity> entities = new ArrayList<>();
+	public List<Particle> particles = new ArrayList<>();
 
 	public final int w, h;
 	public double maxHeight = 64;
@@ -27,7 +27,7 @@ public class Level {
 	public int xs, ys;
 	public Blockmap blockmap;
 
-	public List<Unit> units = new ArrayList<Unit>();
+	public List<Unit> units = new ArrayList<>();
 
 	public Player one;
 	public Player two;
@@ -45,6 +45,8 @@ public class Level {
 			return 0;
 		}
 	};
+
+	public static final Random random = new Random();
 
 	public Level(int w, int h, Player[]players) {
 		this.w = w;
@@ -69,11 +71,13 @@ public class Level {
 			Mob u = Mob.create(i, one);
 			u.x = 16;
 			u.y = 16 + i * 24;
+			u.dir = random.nextGaussian() * Math.PI * 2;
 			add(u);
 
 			u = Mob.create(i, two);
 			u.x = (720/3)*16/9 - 16;
 			u.y = 16 + i * 24;
+			u.dir = random.nextGaussian() * Math.PI * 2;
 			add(u);
 		}
 	}
@@ -119,7 +123,7 @@ public class Level {
 	}
 
 	public void renderSprites(Bitmap bm) {
-		TreeSet<Sprite> sortedSprites = new TreeSet<Sprite>(spriteComparator);
+		TreeSet<Sprite> sortedSprites = new TreeSet<>(spriteComparator);
 		sortedSprites.addAll(entities);
 		sortedSprites.addAll(particles);
 		for (Sprite s : sortedSprites) {
@@ -141,7 +145,7 @@ public class Level {
 	}
 
 	public List<Unit> getUnitScreenSpace(double x0, double y0, double x1, double y1) {
-		List <Unit> result = new ArrayList<Unit>();
+		List <Unit> result = new ArrayList<>();
 		for (Unit u : units) {
 			if (u.intersectsScreenSpace(x0, y0, x1, y1)) {
 				result.add(u);
@@ -150,17 +154,15 @@ public class Level {
 		return result;
 	}
 
-	public void explode(Bullet rocket, double x, double y, double z, int dmg, double radius) {
-		double r = radius;
+	public void explode(Bullet rocket, double x, double y, double z, int dmg, double r) {
 		List<Entity> entities = getEntities(x - r, y - r, z - r, x + r, y + r, z + r);
-		for (int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
+		for (Entity e : entities) {
 			//if (!(e instanceof Unit)) continue;
 			//Unit u = (Unit) e;
 			double xd = e.x - x;
 			double yd = e.y - y;
 			double zd = (e.z + e.zh / 2) - z;
-			if (xd * xd + yd * yd + zd * zd > r * r) {
+			if (xd * xd + yd * yd + zd * zd < r * r) { //here was a huge bug actually
 				double dd = Math.sqrt(xd * xd + yd * yd + zd * zd);
 				xd /= dd;
 				yd /= dd;
