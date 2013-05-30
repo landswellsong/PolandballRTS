@@ -1,10 +1,6 @@
 package de.cirrus.polandball.units.order;
 
-/**
- * User: Cirrus
- * Date: 11.05.13
- * Time: 00:34
- */
+
 public class MoveOrder extends Order {
 
 	public double x, y;
