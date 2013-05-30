@@ -14,8 +14,7 @@ I will make the level design and the AI completely by myself but it would be nic
  There is yet too little information about the end product but I'd appreciate your help a lot in the near future
  (1-2 weeks?) Keep updated (as I'll keep git updated) t. cirrus
 
- 
-The server will be the last thing.
+
 
 
 Side-objectives: storyline? buildings? more like an adventure?
@@ -23,20 +22,3 @@ Side-objectives: storyline? buildings? more like an adventure?
 Open for suggestions
 
 
-GOOD EVENING EVERYONE
-Today, I have no idea yet what to do, but we'll find out :3
-I need a few minutes to catch myself and get a review back of the code
-
-
-Ah well, we'll have to do a lot of restructuring today I guess
-
-I'm separating the Unit and Mob class.
-It'll take a while to consent on how to do it
-See the playlist if you want, brb
-re :3
-
-
-fucking oracle
-sometimes the reference to an old object still exists
-
-Thanks for watching, I'm building the version and posting it now on kc, until next time!
