@@ -12,7 +12,7 @@ public class Blockmap {
 	public static long oks;
 
 	public class BlockCell {
-		public List<Entity> entities = new ArrayList<>();
+		public List<Entity> entities = new ArrayList<Entity>();
 
 		public void getEntities(List<Entity> result, double x0, double y0, double z0, double x1, double y1, double z1) {
 			for (Entity e : entities) {

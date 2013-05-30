@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntityListCache {
-	private static List<ArrayList<Entity>> cache = new ArrayList<>();
+	private static List<ArrayList<Entity>> cache = new ArrayList<ArrayList<Entity>>();
 
 	private static int cc = 0;
 

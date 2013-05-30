@@ -165,7 +165,7 @@ public class PlayerView {
 	public void render(Bitmap screen) {
 		screen.fill(0, 0, screen.w, screen.h, 0xffff00ff);
 		game.renderRest(screen, (int) Math.floor(xScroll), (int) Math.floor(yScroll));
-		TreeSet<Sprite> sortedSprites = new TreeSet<>(game.level.spriteComparator);
+		TreeSet<Sprite> sortedSprites = new TreeSet<Sprite>(game.level.spriteComparator);
 		sortedSprites.addAll(player.selected);
 		for (Sprite s : sortedSprites) {
 			if (!s.removed) {

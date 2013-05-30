@@ -50,7 +50,7 @@ public class Input {
 	public String typed = "";
 	
 	
-	public List<Key> keys = new ArrayList<>();
+	public List<Key> keys = new ArrayList<Key>();
 
 	public Key up = new Key(this).bind(KeyEvent.VK_UP).bind(KeyEvent.VK_W);
 	public Key down = new Key(this).bind(KeyEvent.VK_DOWN).bind(KeyEvent.VK_S);
