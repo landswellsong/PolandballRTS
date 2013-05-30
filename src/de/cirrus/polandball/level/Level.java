@@ -18,8 +18,8 @@ import java.util.Random;
 import java.util.TreeSet;
 
 public class Level {
-	public List<Entity> entities = new ArrayList<>();
-	public List<Particle> particles = new ArrayList<>();
+	public List<Entity> entities = new ArrayList<Entity>();
+	public List<Particle> particles = new ArrayList<Particle>();
 
 	public final int w, h;
 	public double maxHeight = 64;
@@ -27,7 +27,7 @@ public class Level {
 	public int xs, ys;
 	public Blockmap blockmap;
 
-	public List<Unit> units = new ArrayList<>();
+	public List<Unit> units = new ArrayList<Unit>();
 
 	public Player one;
 	public Player two;
@@ -123,7 +123,7 @@ public class Level {
 	}
 
 	public void renderSprites(Bitmap bm) {
-		TreeSet<Sprite> sortedSprites = new TreeSet<>(spriteComparator);
+		TreeSet<Sprite> sortedSprites = new TreeSet<Sprite>(spriteComparator);
 		sortedSprites.addAll(entities);
 		sortedSprites.addAll(particles);
 		for (Sprite s : sortedSprites) {
@@ -145,7 +145,7 @@ public class Level {
 	}
 
 	public List<Unit> getUnitScreenSpace(double x0, double y0, double x1, double y1) {
-		List <Unit> result = new ArrayList<>();
+		List <Unit> result = new ArrayList<Unit>();
 		for (Unit u : units) {
 			if (u.intersectsScreenSpace(x0, y0, x1, y1)) {
 				result.add(u);
