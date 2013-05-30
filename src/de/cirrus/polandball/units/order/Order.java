@@ -2,12 +2,7 @@ package de.cirrus.polandball.units.order;
 
 import de.cirrus.polandball.units.Mob;
 
-/**
- * User: Cirrus
- * Date: 11.05.13
- * Time: 00:32
- * ZERE MUST BE ORDER
- */
+
 public class Order {
 	Mob unit;
 
