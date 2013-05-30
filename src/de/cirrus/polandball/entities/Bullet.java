@@ -54,8 +54,7 @@ public class Bullet extends Entity {
 		double xd = xo - x;
 		double yd = yo - y;
 		double zd = zo - z;
-
-		int steps = (int) (Math.sqrt(xd * xd + yd * yd) + 1);
+		int steps = (int) (Math.sqrt(xd * xd + yd * yd + zd * zd) + 1);
 		for (int i = 0; i < 1; i++) {
 			double zz = 0;
 			b.setPixel((int) (x + xd * i / steps), (int) (y + yd * i / steps - zz), 1);
@@ -66,18 +65,18 @@ public class Bullet extends Entity {
 		double xd = xo - x;
 		double yd = yo - y;
 		double zd = zo - z;
-
-		int steps = (int) (Math.sqrt(xd * xd + yd * yd) + 1);
+		int steps = (int) (Math.sqrt(xd * xd + yd * yd + zd * zd) + 1);
 		for (int i = 0; i < steps; i++) {
 			if (Math.random() * steps < i) continue;
-			int br = 200 - i * 200 / steps;
-			int col = 0;
-			if (owner.team == Team.allied) {
+			double zz = z + zd * i / steps;
+			int br = 255 - i * 256 / steps;
+
+			int col;
+			if (owner.team == Team.allied)
 				col = 0xff0000ff | (0x010100 * br);
-			} else {
+			else
 				col = 0xffff0000 | (0x000101 * br);
-			}
-			b.setPixel((int) (x + xd * i / steps), (int) (y + yd * i / steps), col);
+			b.setPixel((int) (x + xd * i / steps), (int) (y + yd * i / steps - zz), col);
 		}
 	}
 
@@ -114,7 +113,6 @@ public class Bullet extends Entity {
 			double fraction = 1 - (distanceTravelled - weapon.midDistance) / (weapon.farDistance - weapon.midDistance);
 			dmg *= (weapon.highRamp * fraction + 100 * (1 - fraction)) / 100.0;
 		}
-		int d = (int) (Weapon.random.nextDouble() + dmg);
-		return d;
+		return (int) (Weapon.random.nextDouble() + dmg);
 	}
 }
