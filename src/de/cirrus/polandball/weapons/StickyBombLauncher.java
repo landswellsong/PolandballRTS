@@ -1,11 +1,10 @@
 package de.cirrus.polandball.weapons;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.cirrus.polandball.entities.StickyBomb;
 import de.cirrus.polandball.units.Mob;
-import de.cirrus.polandball.units.Unit;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StickyBombLauncher extends Weapon {
 

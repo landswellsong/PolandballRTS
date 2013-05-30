@@ -57,14 +57,14 @@ public class FlameBullet extends Bullet {
 	public void renderShadows(Bitmap b, int xp, int yp) {
 
 	}
-
+	
 	public void collide(Entity e, double xxa, double yya, double zza) {
 		if (e != null) {
 			e.hitBy(this);
 		}
 		remove();
 	}
-
+	
 	public void applyHitEffect(Unit unit) {
 		unit.burnTime = 60 * 10;
 	}

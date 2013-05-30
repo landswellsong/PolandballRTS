@@ -2,7 +2,6 @@ package de.cirrus.polandball.weapons;
 
 import de.cirrus.polandball.entities.Bullet;
 import de.cirrus.polandball.units.Mob;
-import de.cirrus.polandball.units.Unit;
 
 public class Shotgun extends Weapon {
 

@@ -13,6 +13,10 @@ public class BloodDebris extends Debris {
 	}
 
 	public void renderShadows(Bitmap b, int xp, int yp) {
-		b.fill(xp, yp, xp, yp, 1);
+		b.setPixel(xp, yp, 1);
+	}
+
+	public void render(Bitmap b, int xp, int yp) {
+		b.setPixel(xp, yp, 0xffa00000);
 	}
 }

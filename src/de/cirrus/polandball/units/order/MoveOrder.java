@@ -1,6 +1,5 @@
 package de.cirrus.polandball.units.order;
 
-
 /**
  * User: Cirrus
  * Date: 11.05.13

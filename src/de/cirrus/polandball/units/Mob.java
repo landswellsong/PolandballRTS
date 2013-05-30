@@ -1,6 +1,5 @@
 package de.cirrus.polandball.units;
 
-
 import de.cirrus.polandball.Art;
 import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.Player;
@@ -14,8 +13,8 @@ import de.cirrus.polandball.weapons.Weapon;
 
 import java.util.List;
 
-//TODO: everything
 public class Mob extends Unit {
+
 	public static final int UNIT_POLAND = 0;
 	public static final int UNIT_GERMANY = 1;
 	public static final int UNIT_NETHERLANDS = 2;
@@ -25,22 +24,20 @@ public class Mob extends Unit {
 	public static final int UNIT_FINLAND = 6;
 	public static final int UNIT_JAPAN = 7;
 	public static final int UNIT_BRAZIL = 8;
-
+	
 	public int unitClass;
 	public double walkStep = 0;
 	public Weapon weapon = new Revolver(this);
-	public double speed = 100;
-
-
+	
+	public double speed = 250;
 	public Order order = new IdleOrder();
-
-
+	
 	public Mob(int unitClass, Player player) {
 		super(player);
 		this.unitClass = unitClass;
 		xr = yr = 4;
 	}
-
+	
 	public boolean blocks(Entity e) {
 		if (e instanceof Mob) {
 			Mob u = (Mob) e;
@@ -48,7 +45,7 @@ public class Mob extends Unit {
 		}
 		return super.blocks(e);
 	}
-
+	
 	public void tick() {
 		if (deadTime > 0) {
 			if (visRange > deadTime / 4) visRange = deadTime / 4;
@@ -63,15 +60,14 @@ public class Mob extends Unit {
 		if (burnTime > 0) {
 			if (++burnInterval >= 30) {
 				burnInterval = 0;
-				hurt(3); //dot
+				hurt(3);
 			}
 			burnTime--;
-		}
 
+		}
 		if (hurtTime >= 0) hurtTime--;
 
 		weapon.tick();
-
 		if (weapon.canUse()) {
 			updateWeapon();
 		}
@@ -94,7 +90,6 @@ public class Mob extends Unit {
 		}
 		za -= 0.08;
 
-
 		order.tick();
 		if (order.finished()) {
 			setOrder(getNextOrder());
@@ -105,8 +100,7 @@ public class Mob extends Unit {
 		if (xa * xa + ya * ya < 0.02) {
 			walkStep = 0;
 		}
-
-
+		
 		if (burnTime > 0) {
 			FlameDebris fd = new FlameDebris(x + (random.nextDouble() - 0.5) * 2, y + (random.nextDouble() - 0.5) * 4, z + random.nextInt(12));
 			fd.xa *= 0.1;
@@ -115,8 +109,7 @@ public class Mob extends Unit {
 			fd.life /= 2;
 			level.add(fd);
 		}
-
-		//so the balls spread a little when they have the same goal
+		
 		double r = 4;
 		for (Entity e : level.getEntities(x - r, y - r, z - r, x + r, y + r, z + r)) {
 			if (e instanceof Mob && e != this) {
@@ -128,7 +121,7 @@ public class Mob extends Unit {
 						xd = 0.01;
 						yd = 0;
 					}
-					double dd = Math.sqrt(xd*xd+yd*yd);
+					double dd = Math.sqrt(xd * xd + yd * yd);
 					if (dd < r * r) {
 						xd = xd / dd / dd * 0.5;
 						yd = yd / dd / dd * 0.5;
@@ -140,23 +133,18 @@ public class Mob extends Unit {
 		}
 	}
 
-	public boolean isAlive() {
-		return health > 0;
-	}
-
 	public Order getNextOrder() {
 		return new IdleOrder();
 	}
-
-	public void die() {
-		for (int i = 0; i < 8; i++) {
+	
+	private void die() {
+		for (int i = 0; i < 8; i++)
 			level.add(new MeatDebris(x, y, z + i));
-		}
 		weapon.playerDied();
 		deadTime = 60 * 3;
 		remove();
 	}
-
+	
 	public void updateWeapon() {
 		Entity target = findTarget();
 		if ((weapon.maxAmmoLoaded == 0 || weapon.ammoLoaded > 0) && target != null) {
@@ -165,7 +153,6 @@ public class Mob extends Unit {
 			weapon.reload();
 		}
 	}
-
 
 	public void shootAt(Entity target) {
 		double lead = Math.sqrt(target.distanceToSqr(this)) * weapon.aimLead / 5;
@@ -181,16 +168,16 @@ public class Mob extends Unit {
 		yd /= dd;
 		zd /= dd;
 		weapon.shoot(xd, yd, zd);
-		aimDir = Math.atan2(yd, zd);
+		aimDir = Math.atan2(yd, xd);
 		shootTime = 20;
 	}
 
-
-	private Entity findTarget() {
+	public Entity findTarget() {
 		double r = weapon.maxRange;
 		List<Entity> es = level.getEntities(x - r, y - r, z - r, x + r, y + r, z + r);
 		Entity closest = null;
-		for (Entity e : es) {
+		for (int i = 0; i < es.size(); i++) {
+			Entity e = es.get(i);
 			if (e instanceof Mob && e != this) {
 				Mob u = (Mob) e;
 				if (u.isAlive() && u.distanceToSqr(this) < r * r && isLegalTarget(u)) {
@@ -198,7 +185,6 @@ public class Mob extends Unit {
 						closest = e;
 					} else if (e.distanceToSqr(this) < closest.distanceToSqr(this)) {
 						closest = e;
-
 					}
 				}
 			}
@@ -206,13 +192,17 @@ public class Mob extends Unit {
 		return closest;
 	}
 
+	public boolean isAlive() {
+		return health > 0;
+	}
+	
 	public void render(Bitmap b, int xp, int yp) {
 		if (deadTime > 0) return;
-		renderStats(b);
+		renderStats(b, xp, yp);
 		int frame = 0;
 
 		if (shootTime == 0) {
-			int dirFrame = (int) (Math.floor(-dir * 4 / (Math.PI * 2) - 2.5)) & 3;
+			int dirFrame = (int) (Math.floor(-dir * 4 / (Math.PI * 2) - 3)) & 3;
 			if (dirFrame == 0) frame = 0;
 			if (dirFrame == 1) frame = 3;
 			if (dirFrame == 2) frame = 6;
@@ -231,7 +221,7 @@ public class Mob extends Unit {
 				if (walkFrame == 3) frame += 2;
 			}
 		} else {
-			int dirFrame = (int) (-Math.floor(aimDir * 8 / (Math.PI * 2) - 1.5)) & 7;
+			int dirFrame = (int) (-Math.floor(aimDir * 8 / (Math.PI * 2) - 0.5)) & 7;
 			frame = dirFrame + 9;
 			if (dirFrame > 4) {
 				frame = 9 + 3 - (dirFrame - 5);
@@ -249,8 +239,19 @@ public class Mob extends Unit {
 
 	}
 
+	public void renderStats(Bitmap b, int xp, int yp) {
+		int dmg = (maxHealth - health) * 16 / maxHealth;
+		b.fill(xp - 8, yp - 18, xp + 8, yp - 18, 0xffff0000);
+		b.fill(xp - 8, yp - 18, xp + 8 - dmg, yp - 18, 0xff00ff00);
+		if (weapon.maxAmmoLoaded > 0) {
+			int ammo = (weapon.maxAmmoLoaded - weapon.ammoLoaded) * 16 / weapon.maxAmmoLoaded;
+			b.fill(xp - 8, yp - 17, xp + 8, yp - 17, 0xff000000);
+			b.fill(xp - 8, yp - 17, xp + 8 - ammo, yp - 17, 0xffffcd00);
+		}
+	}
+	
 	public void renderShadows(Bitmap b, int xp, int yp) {
-		if (deadTime > 0) return;
+		if (deadTime > 0) return;		
 		super.renderShadows(b, xp, yp);
 		int frame = 0;
 
@@ -289,30 +290,14 @@ public class Mob extends Unit {
 			b.draw(sheet[frame][unitClass], xp - 8, yp - 15);
 		}
 		b.xFlip = false;
-	}
-
-
-	public void renderStats(Bitmap screen) {
-		int xp = (int) x;
-		int yp = (int) (y - z);
-		int dmg = (maxHealth - health) * 16 / maxHealth;
-		screen.fill(xp - 8, yp - 18, xp + 8, yp - 18, 0xffff0000);
-		screen.fill(xp - 8, yp - 18, xp + 8 - dmg, yp - 18, 0xff00ff00);
-		if (weapon.maxAmmoLoaded > 0) {
-			int ammo = (weapon.maxAmmoLoaded - weapon.ammoLoaded) * 16 / weapon.maxAmmoLoaded;
-			screen.fill(xp - 8, yp - 17, xp + 8, yp - 17, 0xff000000);
-			screen.fill(xp - 8, yp - 17, xp + 8 - ammo, yp - 17, 0xffffcd00);
-		}
 
 	}
-
 
 	public void setOrder(Order order) {
 		this.order = order;
 		order.init(this);
 	}
-
-
+	
 	public void moveForwards() {
 		double moveSpeed = 0.2 * speed / 100;
 		if (!isOnGround()) {
@@ -321,15 +306,14 @@ public class Mob extends Unit {
 		xa += Math.cos(dir) * moveSpeed;
 		ya += Math.sin(dir) * moveSpeed;
 
-		walkStep += speed / 100;
+		walkStep += speed / 250;
 	}
 
-	@SuppressWarnings("unused")
-	public void jump() {
-		za -= 1.5; // :3
+	public void jump () {
+		za= -1.5;
 	}
-
-
+	
+	
 	public static Mob create(int unitClass, Player player) {
 		Mob unit = null;
 		if (unitClass == UNIT_POLAND) unit = new Poland(player);
@@ -341,6 +325,7 @@ public class Mob extends Unit {
 		if (unitClass == UNIT_FINLAND) unit = new Finland(player);
 		if (unitClass == UNIT_JAPAN) unit = new Japan(player);
 		if (unitClass == UNIT_BRAZIL) unit = new Brazil(player);
+		
 		return unit;
 	}
 }

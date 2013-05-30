@@ -2,7 +2,6 @@ package de.cirrus.polandball.weapons;
 
 import de.cirrus.polandball.entities.Bullet;
 import de.cirrus.polandball.units.Mob;
-import de.cirrus.polandball.units.Unit;
 
 public class AssaultRifle extends Weapon {
 
@@ -32,16 +31,5 @@ public class AssaultRifle extends Weapon {
 		shootDelay = shootDelayTime;	
 	}
 	
-	public void reload() {
-		while (ammoLoaded < maxAmmoLoaded && ammoCarried > 0) {
-			ammoLoaded++;
-			ammoCarried--;
-		}
-		if (!wasReloading) {
-			reloadDelay = startReloadDelayTime;
-		} else {
-			reloadDelay = reloadDelayTime;
-		}
-	}
 }
 

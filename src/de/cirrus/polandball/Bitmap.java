@@ -3,13 +3,11 @@ package de.cirrus.polandball;
 import java.awt.image.*;
 import java.util.Arrays;
 
-
 public class Bitmap {
 	public final int[] pixels;
 	public final int w, h;
 	public int xOffs, yOffs;
 	public boolean xFlip;
-
 
 	public Bitmap(int w, int h) {
 		this.w = w;
@@ -43,7 +41,6 @@ public class Bitmap {
 		if (y0 < 0) y0 = 0;
 		if (x1 > w) x1 = w;
 		if (y1 > h) y1 = h;
-
 
 		if (xFlip) {
 			for (int y = y0; y < y1; y++) {
@@ -87,8 +84,7 @@ public class Bitmap {
 
 				for (int x = x0; x < x1; x++) {
 					int c = b.pixels[sp - x];
-					if (c < 0) pixels[dp + x] = ((b.pixels[sp - x] & 0xfefefefe)
-							+ (col & 0xfefefefe)) >> 1;
+					if (c < 0) pixels[dp + x] = ((b.pixels[sp - x] & 0xfefefefe) + (col & 0xfefefefe)) >> 1;
 				}
 			}
 		} else {
@@ -130,9 +126,9 @@ public class Bitmap {
 
 	public void fill(int x0, int y0, int x1, int y1, int color) {
 		x0 += xOffs;
+		y0 += yOffs;
 		x1 += xOffs;
-		y0 += xOffs;
-		y1 += xOffs;
+		y1 += yOffs;
 		if (x0 < 0) x0 = 0;
 		if (y0 < 0) y0 = 0;
 		if (x1 >= w) x1 = w - 1;
@@ -147,15 +143,13 @@ public class Bitmap {
 
 	public void box(int x0, int y0, int x1, int y1, int color) {
 		x0 += xOffs;
+		y0 += yOffs;
 		x1 += xOffs;
-		y0 += xOffs;
-		y1 += xOffs;
-
+		y1 += yOffs;
 		int xx0 = x0;
 		int yy0 = y0;
 		int xx1 = x1;
 		int yy1 = y1;
-
 
 		if (x0 < 0) x0 = 0;
 		if (y0 < 0) y0 = 0;
@@ -170,5 +164,10 @@ public class Bitmap {
 				}
 			}
 		}
+	}
+
+	public void setOffset(int xScroll, int yScroll) {
+		this.xOffs = xScroll;
+		this.yOffs = yScroll;
 	}
 }

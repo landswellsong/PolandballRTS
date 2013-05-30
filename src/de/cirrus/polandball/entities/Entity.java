@@ -1,9 +1,9 @@
 package de.cirrus.polandball.entities;
 
-import java.util.List;
-
 import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.Sprite;
+
+import java.util.List;
 
 
 public class Entity extends Sprite {
@@ -35,8 +35,8 @@ public class Entity extends Sprite {
 		double xn = x + xxa;
 		double yn = y + yya;
 		double zn = z + zza;
-		if (xn < 0 || yn < 0 || xn >= level.w || yn >= level.h || zn < 0 || zn > level.maxHeight) {
-			if (zn < 0) zn = 0;
+		if (xn < 0 || yn < 0 || xn >= level.w * 16 || yn >= level.h * 16 || zn < 0 || zn > level.maxHeight) {
+			if (zn < 0) z = 0;
 			collide(null, xxa, yya, zza);
 			return;
 		}
@@ -49,7 +49,16 @@ public class Entity extends Sprite {
 				return;
 			}
 		}
-
+		//		List<Wall> walls = level.getWalls(xn - xr, yn - yr, zn, xn + xr, yn + yr, zn + zh);
+		if (level.wallBlocks(xn - xr, yn - yr, zn, xn + xr, yn + yr, zn + zh)) {
+			collide(null, xxa, yya, zza);
+			return;
+		}
+		//		for (int i = 0; i < walls.size(); i++) {
+		//			Wall e = walls.get(i);
+		//			collide(e, xxa, yya, zza);
+		//			return;
+		//		}
 		x = xn;
 		y = yn;
 		z = zn;
@@ -57,9 +66,8 @@ public class Entity extends Sprite {
 	}
 
 
-
 	public void renderShadows(Bitmap b, int xp, int yp) {
-
+		
 		b.fill(xp - 3, yp - 4, xp + 1, yp - 4, 1);
 		b.fill(xp - 5, yp - 3, xp + 3, yp - 3, 1);
 		b.fill(xp - 6, yp - 2, xp + 4, yp - 2, 1);

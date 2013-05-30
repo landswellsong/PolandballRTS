@@ -9,7 +9,7 @@ import de.cirrus.polandball.units.Mob;
  * ZERE MUST BE ORDER
  */
 public class Order {
-	public Mob unit;
+	Mob unit;
 
 	public void init (Mob unit) {
 		this.unit = unit;

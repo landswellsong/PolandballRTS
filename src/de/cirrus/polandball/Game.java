@@ -3,34 +3,42 @@ package de.cirrus.polandball;
 import de.cirrus.polandball.level.Level;
 
 public class Game {
-	public Player[] players = new Player[2];
+	
 	public Level level;
-
 	private Bitmap shadows;
 
 	public Game() {
-		players[0] = new Player(Team.allied, level);
-		players[1] = new Player(Team.soviet, level);
-		level = new Level(512, 512, players);
-
+		level = new Level();
 	}
 
 	public void tick() {
 		level.tick();
 	}
 
-	public void renderRest (Bitmap screen) {
+	public void renderSprites(Bitmap screen, int xScroll, int yScroll) {
+		screen.xOffs = -xScroll;
+		screen.yOffs = -yScroll;
+		level.renderSprites(screen);
+	}
+	
+	
+	public void renderRest(Bitmap screen, int xScroll, int yScroll) {
 		if (shadows == null) shadows = new Bitmap(screen.w, screen.h);
 		shadows.clear(0);
 
-		level.renderBg(screen);
+		screen.xOffs = -xScroll;
+		screen.yOffs = -yScroll;
+		level.renderBg(screen, xScroll, yScroll);
+
+		shadows.xOffs = -xScroll;
+		shadows.yOffs = -yScroll;
 		level.renderShadows(shadows);
+		screen.xOffs = 0;
+		screen.yOffs = 0;
 		screen.shade(shadows);
+
+		screen.xOffs = -xScroll;
+		screen.yOffs = -yScroll;
+
 	}
-
-	public void renderSprites(Bitmap screen) {
-		level.renderSprites(screen); //we'll separate it for now
-	}
-
-
 }

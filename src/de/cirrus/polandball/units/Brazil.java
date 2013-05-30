@@ -5,22 +5,20 @@ import de.cirrus.polandball.entities.Entity;
 import de.cirrus.polandball.particles.HealWind;
 import de.cirrus.polandball.weapons.HealingWand;
 
-/**
- * User: Cirrus
- * Date: 25.05.13
- * Time: 19:35
- */
-public class Brazil extends Mob {
 
+public class Brazil extends Mob {
+	
 	public Brazil (Player player) {
 		super(8, player);
-
+		
 		maxHealth = health = 150;
-		weapon = new HealingWand(this); //I feel like brazil could heal with his forest magics
+		weapon = new HealingWand(this);
 	}
 
 	public boolean isLegalTarget(Mob u) {
-		return u.team == this.player.team && u.health < u.maxHealth* 100 / 100;
+		
+		boolean toHeal = u.team ==this.player.team && u.health < u.maxHealth * 100 / 100;
+		return toHeal;
 	}
 
 	public void shootAt(Entity target) {
@@ -29,10 +27,10 @@ public class Brazil extends Mob {
 			if (isLegalTarget(u)) {
 				u.health++;
 				level.add(new HealWind(this, u));
+				
 				aimDir = dir;
 				shootTime = 10;
 			}
 		}
 	}
-
 }

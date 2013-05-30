@@ -5,7 +5,6 @@ import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.Team;
 import de.cirrus.polandball.particles.SmokeDebris;
 import de.cirrus.polandball.units.Mob;
-import de.cirrus.polandball.units.Unit;
 import de.cirrus.polandball.weapons.Weapon;
 
 public class StickyBomb extends Bullet {
@@ -35,6 +34,7 @@ public class StickyBomb extends Bullet {
 	}
 
 	public void render(Bitmap b, int xp, int yp) {
+		
 		int frame = 0;
 		if (xa == 0 && ya == 0 && za == 0) frame = 1;
 		if (owner.team == Team.soviet) frame+=2;

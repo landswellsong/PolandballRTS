@@ -13,20 +13,20 @@ import de.cirrus.polandball.particles.SplatDebris;
 import java.util.Random;
 
 public class Unit extends Entity {
+
 	public static final Random random = new Random();
 	public Team team;
-	public double dir;
-	public int shootTime;
-	public double walkStep;
+	public double dir = 0;
+	public int shootTime = 0;
 	public int maxHealth = 125;
 	public int health = 125;
 	public int hurtTime = 0;
 	public int burnTime;
 	public int burnInterval;
 	public double aimDir;
-	public double visRange = 8; //hypothethical
+	public int visRange = 8;
 	public Player player;
-	public int deadTime; //that too
+	public int deadTime;
 
 	public Unit(Player player) {
 		this.player = player;
@@ -35,6 +35,7 @@ public class Unit extends Entity {
 
 	public void init(Level level) {
 		super.init(level);
+		System.out.println("adding unit");
 		level.units.add(this);
 	}
 
@@ -62,7 +63,7 @@ public class Unit extends Entity {
 		za += (zza - za) * 0.4;
 	}
 
-	public boolean isOnGround() {
+	protected boolean isOnGround() {
 		return z <= 1;
 	}
 
@@ -86,18 +87,18 @@ public class Unit extends Entity {
 	}
 
 	public void renderSelected(Bitmap screen) {
-		int xp = (int) x - 8;
-		int yp = (int) (y - z - 13);
-
-		//int r = 10;
-		//screen.box(xp - r, yp - r, xp + r, yp + r, 0xff00ff00);
-		screen.draw(Art.i.mouseCursor[1][0], xp, yp);
+		if (deadTime > 0) return;
+		int xp = (int) (Math.floor((x - y) * SCALE_X));
+		int yp = (int) (Math.floor((y + x) * SCALE_Y)) - 6;
+		// int r = 8;
+		// screen.box(xp - r, yp - r, xp + r, yp + r, 0xff00ff00);
+		screen.draw(Art.i.mouseCursor[1][0], xp - 8, yp - 7);
 
 	}
 
 	public double distanceToScreenSpaceSqr(double x0, double y0) {
-		double xx = x;
-		double yy = y - z - 6;
+		double xx = (int) (Math.floor((x - y) * SCALE_X));
+		double yy = (int) (Math.floor((y + x - 6) * SCALE_Y));
 
 		double xd = xx - x0;
 		double yd = yy - y0;
@@ -106,8 +107,8 @@ public class Unit extends Entity {
 	}
 
 	public boolean intersectsScreenSpace(double x0, double y0, double x1, double y1) {
-		double xx = x;
-		double yy = y - z - 6;
+		double xx = (int) (Math.floor((x - y) * SCALE_X));
+		double yy = (int) (Math.floor((y + x - 6) * SCALE_Y));
 		int ww = 4;
 		int hh = 6;
 		if (x1 <= xx - ww || x0 > xx + ww || y1 <= yy - hh || y0 > yy + hh) return false;
@@ -132,28 +133,22 @@ public class Unit extends Entity {
 		while (angle >= Math.PI) angle -= Math.PI * 2;
 
 		double angleDiff = angle - dir;
-
 		while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
 		while (angleDiff >= Math.PI) angleDiff -= Math.PI * 2;
 
 		double turnSpeed = 0.2;
-		double near = 1;
-
+		double near = 1.0;
 		boolean wasAimed = angleDiff * angleDiff < near * near;
 		if (angleDiff < -turnSpeed) angleDiff = -turnSpeed;
 		if (angleDiff > +turnSpeed) angleDiff = +turnSpeed;
-
 		dir += angleDiff;
-
 		return wasAimed;
 
 	}
 
 	public void heal(int toHeal) {
 		int maxHeal = maxHealth - health;
-		if (maxHeal <= 0) {
-			return;
-		}
+		if (maxHeal <= 0) return;
 		if (toHeal > maxHeal) toHeal = maxHeal;
 		health += toHeal;
 	}
