@@ -73,7 +73,7 @@ public class Debris extends Particle {
 		}
 	}
 
-	public void renderShadow(Bitmap b, int xp, int yp) {
+	public void renderShadows(Bitmap b, int xp, int yp) {
 		b.fill(xp - 1, yp, xp, yp, 1);
 	}
 

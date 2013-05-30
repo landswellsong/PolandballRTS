@@ -2,7 +2,7 @@ package de.cirrus.polandball.particles;
 
 import de.cirrus.polandball.Bitmap;
 
-
+@SuppressWarnings("unused")
 public class HealDebris extends Debris {
 	public int lifeTime;
 	public int color = 0;

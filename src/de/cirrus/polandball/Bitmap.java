@@ -169,8 +169,4 @@ public class Bitmap {
 		}
 	}
 
-	public void setOffset(int xScroll, int yScroll) {
-		this.xOffs = xScroll;
-		this.yOffs = yScroll;
-	}
 }
