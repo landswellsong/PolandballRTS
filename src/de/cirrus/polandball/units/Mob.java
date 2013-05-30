@@ -299,7 +299,7 @@ public class Mob extends Unit {
 		screen.fill(xp - 8, yp - 18, xp + 8, yp - 18, 0xffff0000);
 		screen.fill(xp - 8, yp - 18, xp + 8 - dmg, yp - 18, 0xff00ff00);
 		if (weapon.maxAmmoLoaded > 0) {
-			int ammo = (weapon.maxAmmoLoaded - weapon.ammoLoaded) * 11 / weapon.maxAmmoLoaded;
+			int ammo = (weapon.maxAmmoLoaded - weapon.ammoLoaded) * 16 / weapon.maxAmmoLoaded;
 			screen.fill(xp - 8, yp - 17, xp + 8, yp - 17, 0xff000000);
 			screen.fill(xp - 8, yp - 17, xp + 8 - ammo, yp - 17, 0xffffcd00);
 		}

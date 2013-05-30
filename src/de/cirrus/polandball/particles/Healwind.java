@@ -12,7 +12,7 @@ import java.util.Random;
  * Date: 25.05.13
  * Time: 20:12
  */
-public class Healwind extends Particle {
+public class HealWind extends Particle {
 	public static final Random random = new Random();
 
 	public Mob from, to;
@@ -24,7 +24,7 @@ public class Healwind extends Particle {
 	public double zo = (random.nextDouble() - 0.5) * 5;
 
 
-	public Healwind (Mob from, Mob to) {
+	public HealWind(Mob from, Mob to) {
 		this.from = from;
 		this.to = to;
 		life = random.nextInt(10) + 20;

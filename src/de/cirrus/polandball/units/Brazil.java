@@ -2,7 +2,7 @@ package de.cirrus.polandball.units;
 
 import de.cirrus.polandball.Player;
 import de.cirrus.polandball.entities.Entity;
-import de.cirrus.polandball.particles.Healwind;
+import de.cirrus.polandball.particles.HealWind;
 import de.cirrus.polandball.weapons.HealingWand;
 
 /**
@@ -28,7 +28,7 @@ public class Brazil extends Mob {
 			Mob u = (Mob) target;
 			if (isLegalTarget(u)) {
 				u.health++;
-				level.add(new Healwind(this, u));
+				level.add(new HealWind(this, u));
 				aimDir = dir;
 				shootTime = 10;
 			}
