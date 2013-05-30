@@ -16,7 +16,7 @@ public class Brazil extends Mob {
 	}
 
 	public boolean isLegalTarget(Mob u) {
-		
+
 		boolean toHeal = u.team ==this.player.team && u.health < u.maxHealth * 100 / 100;
 		return toHeal;
 	}

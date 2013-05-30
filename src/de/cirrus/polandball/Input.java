@@ -28,8 +28,8 @@ public class Input {
 		public void tick(boolean[] keysDown) {
 			wasDown = down;
 			down = false;
-			for (int i = 0; i < bindings.length; i++) {
-				if(keysDown[bindings[i]]) down = true;
+			for (int binding : bindings) {
+				if (keysDown[binding]) down = true;
 			}
 			typed = !wasDown && down;
 		}
@@ -50,7 +50,7 @@ public class Input {
 	public String typed = "";
 	
 	
-	public List<Key> keys = new ArrayList<Key>();
+	public List<Key> keys = new ArrayList<>();
 
 	public Key up = new Key(this).bind(KeyEvent.VK_UP).bind(KeyEvent.VK_W);
 	public Key down = new Key(this).bind(KeyEvent.VK_DOWN).bind(KeyEvent.VK_S);

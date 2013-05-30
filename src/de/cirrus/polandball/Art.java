@@ -48,9 +48,9 @@ public class Art {
 	public static Bitmap load(String name) {
 		BufferedImage img;
 		try {
-			img = ImageIO.read(Art.class.getResource(name));
+			img = ImageIO.read(Art.class.getResource("/levels/level.png"));
 		} catch (IOException e) {
-			throw new RuntimeException("Failed to load " + name);
+			throw new RuntimeException("Failed to load " + "/levels/level.png");
 		}
 
 		int sw = img.getWidth();
@@ -63,9 +63,9 @@ public class Art {
 	}
 
 	public static Bitmap[][] recolor(Bitmap[][] bitmaps, int a0, int b0, int a1, int b1) {
-		for (int x = 0; x < bitmaps.length; x++) {
-			for (int y = 0; y < bitmaps[x].length; y++) {
-				Bitmap bm = bitmaps[x][y];
+		for (Bitmap[] bitmap : bitmaps) {
+			for (int y = 0; y < bitmap.length; y++) {
+				Bitmap bm = bitmap[y];
 				for (int i = 0; i < bm.pixels.length; i++) {
 					if (bm.pixels[i] == a0) bm.pixels[i] = b0;
 					if (bm.pixels[i] == a1) bm.pixels[i] = b1;

@@ -28,6 +28,7 @@ public class Bitmap {
 		pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	public void draw(Bitmap b, int xp, int yp) {
 		xp += xOffs;
 		yp += yOffs;
@@ -65,6 +66,7 @@ public class Bitmap {
 		}
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	public void blendDraw(Bitmap b, int xp, int yp, int col) {
 		xp += xOffs;
 		yp += yOffs;
@@ -141,6 +143,7 @@ public class Bitmap {
 		}
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	public void box(int x0, int y0, int x1, int y1, int color) {
 		x0 += xOffs;
 		y0 += yOffs;

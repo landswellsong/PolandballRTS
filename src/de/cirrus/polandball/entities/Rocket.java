@@ -17,13 +17,6 @@ public class Rocket extends Bullet {
 	}
 
 	
-	public boolean blocks(Entity e) {
-		if (e == owner) return false;
-		if (e instanceof Bullet) return false;
-		if (e instanceof Mob && ((Mob) e).team == this.owner.team) return false;
-		return true;
-	}
-	
 	public void tick() {
 		xo = x;
 		yo = y;

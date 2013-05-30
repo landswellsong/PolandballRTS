@@ -40,6 +40,7 @@ public class PlayerView {
 	
 	
 
+	@SuppressWarnings("ConstantConditions")
 	public void tick() {
 		time++;
 
@@ -121,8 +122,9 @@ public class PlayerView {
 		Unit nearest = null;
 		for (Unit u : game.level.getUnitScreenSpace(x0 - r, y0 - r, x0 + r, y0 + r)) {
 			if (u.team == player.team) {
-				if (nearest == null || u.distanceToScreenSpaceSqr(x0, y0) < nearest.distanceToScreenSpaceSqr(x0, y0));
-				nearest = u;
+				if (nearest == null || u.distanceToScreenSpaceSqr(x0, y0) < nearest.distanceToScreenSpaceSqr(x0, y0)) {
+					nearest = u;
+				}
 			}
 		}
 		if (nearest != null && nearest instanceof Mob) {
@@ -163,7 +165,7 @@ public class PlayerView {
 	public void render(Bitmap screen) {
 		screen.fill(0, 0, screen.w, screen.h, 0xffff00ff);
 		game.renderRest(screen, (int) Math.floor(xScroll), (int) Math.floor(yScroll));
-		TreeSet<Sprite> sortedSprites = new TreeSet<Sprite>(game.level.spriteComparator);
+		TreeSet<Sprite> sortedSprites = new TreeSet<>(game.level.spriteComparator);
 		sortedSprites.addAll(player.selected);
 		for (Sprite s : sortedSprites) {
 			if (!s.removed) {

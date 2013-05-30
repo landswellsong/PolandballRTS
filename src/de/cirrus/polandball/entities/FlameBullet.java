@@ -18,9 +18,7 @@ public class FlameBullet extends Bullet {
 	}
 
 	public boolean blocks(Entity e) {
-		if (e == owner) return false;
-		if (e instanceof Bullet) return false;
-		return true;
+		return !(e == owner || e instanceof Bullet);
 	}
 
 	public void tick() {

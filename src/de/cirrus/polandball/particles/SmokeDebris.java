@@ -18,7 +18,7 @@ public class SmokeDebris extends Debris {
 	
 	
 	public void render(Bitmap b, int xp, int yp) {
-		int tint = life * 127 / lifeTime + 0;
+		int tint = life * 127 / lifeTime;
 		b.blendDraw(getBitmap(), xp - 4, yp - 4, 0x10101 * tint);
 	}
 	

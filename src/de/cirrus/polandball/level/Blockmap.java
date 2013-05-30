@@ -1,10 +1,10 @@
 package de.cirrus.polandball.level;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.cirrus.polandball.entities.Entity;
 import de.cirrus.polandball.entities.EntityListCache;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Blockmap {
 
@@ -12,11 +12,10 @@ public class Blockmap {
 	public static long oks;
 
 	public class BlockCell {
-		public List<Entity> entities = new ArrayList<Entity>();
+		public List<Entity> entities = new ArrayList<>();
 
 		public void getEntities(List<Entity> result, double x0, double y0, double z0, double x1, double y1, double z1) {
-			for (int i = 0; i < entities.size(); i++) {
-				Entity e = entities.get(i);
+			for (Entity e : entities) {
 				tries++;
 				if (e.intersects(x0, y0, z0, x1, y1, z1)) {
 					oks++;

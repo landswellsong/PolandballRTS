@@ -37,7 +37,7 @@ public class Bullet extends Entity {
 	public boolean blocks(Entity e) {
 		if (e == owner) return false;
 		if (e instanceof Bullet) return false;
-		if (e instanceof Mob && ((Mob) e).team == owner.team) return false;
+		if (e instanceof Mob && ((Mob)e).team == owner.team) return false;
 		return true;
 	}
 
@@ -64,7 +64,7 @@ public class Bullet extends Entity {
 			if (Math.random() * steps < i) continue;
 			int br = 200 - i * 200 / steps;
 
-			int col = 0;
+			int col;
 			if (owner.team == Team.allied)
 				col = 0xff0000ff | (0x010100 * br);
 			else

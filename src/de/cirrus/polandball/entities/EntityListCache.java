@@ -3,10 +3,8 @@ package de.cirrus.polandball.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.cirrus.polandball.entities.Entity;
-
 public class EntityListCache {
-	private static List<ArrayList<Entity>> cache = new ArrayList<ArrayList<Entity>>();
+	private static List<ArrayList<Entity>> cache = new ArrayList<>();
 
 	private static int cc = 0;
 

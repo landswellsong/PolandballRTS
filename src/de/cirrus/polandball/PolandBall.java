@@ -158,7 +158,7 @@ public class PolandBall extends Canvas implements Runnable {
 		frame.setLayout(new BorderLayout());
 		frame.add(gameComponent);
 		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setAlwaysOnTop(true);
 		frame.setLocationRelativeTo(null);

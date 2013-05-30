@@ -21,9 +21,9 @@ import java.util.TreeSet;
 public class Level {
 	public Random random = new Random();
 	
-	public List<Entity> entities = new ArrayList<Entity>();
-	public List<Particle> particles = new ArrayList<Particle>();
-	public List<Sprite> mapSprites = new ArrayList<Sprite>();
+	public List<Entity> entities = new ArrayList<>();
+	public List<Particle> particles = new ArrayList<>();
+	public List<Sprite> mapSprites = new ArrayList<>();
 	
 	
 	public final int w, h;
@@ -32,7 +32,7 @@ public class Level {
 	public int xs, ys;
 	public Blockmap blockmap;
 
-	public List<Unit> units = new ArrayList<Unit>();
+	public List<Unit> units = new ArrayList<>();
 
 
 	public Comparator<Sprite> spriteComparator = new Comparator<Sprite>() {
@@ -52,6 +52,7 @@ public class Level {
 	public Player redPlayer;
 	public Player bluPlayer;
 	
+	@SuppressWarnings("ConstantConditions")
 	public Level() {
 		Bitmap bmp = Art.load("/levels/level.png");
 		int w = bmp.w + 8;
@@ -107,7 +108,7 @@ public class Level {
 	}
 	
 	public List<Unit> getUnitScreenSpace(double x0, double y0, double x1, double y1) {
-		List<Unit> result = new ArrayList<Unit>();
+		List<Unit> result = new ArrayList<>();
 		for (Unit u : units) {
 			if (u.intersectsScreenSpace(x0, y0, x1, y1)) {
 				result.add(u);
@@ -202,7 +203,7 @@ public class Level {
 
 	public void renderSprites(Bitmap bm) {
 		boolean visible = true;
-		TreeSet<Sprite> sortedSprites = new TreeSet<Sprite>(spriteComparator);
+		TreeSet<Sprite> sortedSprites = new TreeSet<>(spriteComparator);
 		for (Sprite s : entities) {
 			if (visible) sortedSprites.add(s);
 		}
@@ -230,11 +231,9 @@ public class Level {
 	}
 
 
-	public void explode(Bullet rocket, double x, double y, double z, int dmg, double radius) {
-		double r = radius;
+	public void explode(Bullet rocket, double x, double y, double z, int dmg, double r) {
 		List<Entity> entities = getEntities(x - r, y - r, z - r, x + r, y + r, z + r);
-		for (int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
+		for (Entity e : entities) {
 			//if (!(e instanceof Unit)) continue;
 			//Unit u = (Unit) e;
 			double xd = e.x - x;

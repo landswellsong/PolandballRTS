@@ -11,7 +11,7 @@ import java.util.List;
 public class Player {
 	public Team team;
 	public Level level;
-	public List<Mob> selected = new ArrayList<Mob>();
+	public List<Mob> selected = new ArrayList<>();
 
 	
 	public Player(Level level, Team team) {

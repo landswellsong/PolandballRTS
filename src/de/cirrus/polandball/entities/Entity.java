@@ -12,8 +12,7 @@ public class Entity extends Sprite {
 	public boolean isCollideable = true;
 
 	public boolean intersects(double x0, double y0, double z0, double x1, double y1, double z1) {
-		if (x1 <= x - xr || x0 > x + xr || y1 <= y - yr || y0 > y + yr || z1 <= z || z0 > z + zh) return false;
-		return true;
+		return !(x1 <= x - xr || x0 > x + xr || y1 <= y - yr || y0 > y + yr || z1 <= z || z0 > z + zh);
 	}
 
 	public boolean blocks(Entity e) {
@@ -41,8 +40,7 @@ public class Entity extends Sprite {
 			return;
 		}
 		List<Entity> entities = level.getEntities(xn - xr, yn - yr, zn, xn + xr, yn + yr, zn + zh);
-		for (int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
+		for (Entity e : entities) {
 			if (e == this) continue;
 			if (e.blocks(this) && blocks(e)) {
 				collide(e, xxa, yya, zza);
@@ -62,7 +60,6 @@ public class Entity extends Sprite {
 		x = xn;
 		y = yn;
 		z = zn;
-		return;
 	}
 
 

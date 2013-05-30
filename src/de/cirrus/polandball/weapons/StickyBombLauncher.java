@@ -8,7 +8,7 @@ import java.util.List;
 
 public class StickyBombLauncher extends Weapon {
 
-	private List<StickyBomb> bombs = new ArrayList<StickyBomb>();
+	private List<StickyBomb> bombs = new ArrayList<>();
 	
 	public StickyBombLauncher(Mob owner) {
 		super(owner);

@@ -111,8 +111,7 @@ public class Unit extends Entity {
 		double yy = (int) (Math.floor((y + x - 6) * SCALE_Y));
 		int ww = 4;
 		int hh = 6;
-		if (x1 <= xx - ww || x0 > xx + ww || y1 <= yy - hh || y0 > yy + hh) return false;
-		return true;
+		return !(x1 <= xx - ww || x0 > xx + ww || y1 <= yy - hh || y0 > yy + hh);
 	}
 
 	public double distanceTo(double x, double y) {

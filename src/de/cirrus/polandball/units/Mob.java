@@ -46,6 +46,7 @@ public class Mob extends Unit {
 		return super.blocks(e);
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	public void tick() {
 		if (deadTime > 0) {
 			if (visRange > deadTime / 4) visRange = deadTime / 4;
@@ -176,8 +177,7 @@ public class Mob extends Unit {
 		double r = weapon.maxRange;
 		List<Entity> es = level.getEntities(x - r, y - r, z - r, x + r, y + r, z + r);
 		Entity closest = null;
-		for (int i = 0; i < es.size(); i++) {
-			Entity e = es.get(i);
+		for (Entity e : es) {
 			if (e instanceof Mob && e != this) {
 				Mob u = (Mob) e;
 				if (u.isAlive() && u.distanceToSqr(this) < r * r && isLegalTarget(u)) {

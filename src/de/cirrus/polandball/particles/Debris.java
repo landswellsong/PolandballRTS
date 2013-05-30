@@ -100,7 +100,6 @@ public class Debris extends Particle {
 		x = xn;
 		y = yn;
 		z = zn;
-		return;
 	}
 
 	public void collide(Entity e, double xxa, double yya, double zza) {
