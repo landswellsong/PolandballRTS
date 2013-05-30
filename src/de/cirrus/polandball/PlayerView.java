@@ -5,10 +5,6 @@ import de.cirrus.polandball.units.Unit;
 
 import java.util.TreeSet;
 
-/**
- * User: Cirrus Date: 10.05.13 Time: 20:14
- */
-
 
 public class PlayerView {
 	private static final int SELECT_REGION_DISTANCE = 4;
