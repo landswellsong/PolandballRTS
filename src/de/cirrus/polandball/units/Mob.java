@@ -90,7 +90,7 @@ public class Mob extends Unit {
 			ya *= 0.99;
 		}
 		za -= 0.08;
-
+		if (random.nextInt(100) == 0) jump();
 		order.tick();
 		if (order.finished()) {
 			setOrder(getNextOrder());
@@ -240,11 +240,11 @@ public class Mob extends Unit {
 	}
 
 	public void renderStats(Bitmap b, int xp, int yp) {
-		int dmg = (maxHealth - health) * 16 / maxHealth;
+		int dmg = (maxHealth - health) * 17 / maxHealth;
 		b.fill(xp - 8, yp - 18, xp + 8, yp - 18, 0xffff0000);
 		b.fill(xp - 8, yp - 18, xp + 8 - dmg, yp - 18, 0xff00ff00);
 		if (weapon.maxAmmoLoaded > 0) {
-			int ammo = (weapon.maxAmmoLoaded - weapon.ammoLoaded) * 16 / weapon.maxAmmoLoaded;
+			int ammo = (weapon.maxAmmoLoaded - weapon.ammoLoaded) * 17 / weapon.maxAmmoLoaded;
 			b.fill(xp - 8, yp - 17, xp + 8, yp - 17, 0xff000000);
 			b.fill(xp - 8, yp - 17, xp + 8 - ammo, yp - 17, 0xffffcd00);
 		}

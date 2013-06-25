@@ -31,14 +31,14 @@ public class PlayerView {
 	public int time = 0;
 	
 
-	public PlayerView(Game game, Player player, Input mouse) {
+	public PlayerView(Game game, Player player, Input input) {
 		this.game = game;
 		this.player = player;
-		this.input = mouse;
+		this.input = input;
 		
 	}
-	
-	
+
+
 
 	@SuppressWarnings("ConstantConditions")
 	public void tick() {

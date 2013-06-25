@@ -1,42 +1,37 @@
-TODO:
+Polandball rts TODO
+What I expect the end product to be:
 
+Gameplay should be fun and smooth, kind of like Starcraft, which just feels right
+Network functionality! People should be able to play via the internet against and
+with each other.
+The AI should be responsive, the units somewhat self aware on what happens next to them.
+It should have a nice GUI.
+Buildings and vehicles of different kinds will be included, as well as base and unit building.
+The units should be customizable. Different weapons, buffs, mounts(?) etc...
+Interaction with the environment should be possible. Manipulating the map for your own favor
+as a sandbox element alone should make the game more unique to any rts so far.
 
--Level design (Sprite based isometric or simple tiles)
--AI
--UI
--UDP server and client (?)
+Details, what Cirrus will do himself in the near future:
+-AI (A* pathfinding algorithm)
+-Item entities
+-fog of war
+-basic vehicles
+-(open)
 
-I will make the level design and the AI completely by myself but it would be nice if someone takes the UI part.
- I can do that, but I'd need mockups on how you intend it too look/work. t. landswellsong
- -The problem is, as far as we're not sure about the game play and level design, we can't really do the UI yet.
- E.g. a minimap would be a black square with white dots for own units and red dots for visible enemies.
- The selected units should be displayed (I'll limit them), there has to be a main menu, an init screen and so on.
- There is yet too little information about the end product but I'd appreciate your help a lot in the near future
- (1-2 weeks?) Keep updated (as I'll keep git updated) t. cirrus
+Open TODOs for the near future, feel free to contribute here:
 
- 
-The server will be the last thing.
+-GUI
+-UDP server and client, packets
+-sound
+-more artwork
 
+Feel free to contribute! Your code will always be inspected, so if you're not sure
+about bugs or anything else, let us know. Use the personal contact if you want to contribute outside git,
+like artwork, music and that kind.
 
-Side-objectives: storyline? buildings? more like an adventure?
+Always keep in mind that we're doing open source here.
 
-Open for suggestions
+Personal contact:
 
-
-GOOD EVENING EVERYONE
-Today, I have no idea yet what to do, but we'll find out :3
-I need a few minutes to catch myself and get a review back of the code
-
-
-Ah well, we'll have to do a lot of restructuring today I guess
-
-I'm separating the Unit and Mob class.
-It'll take a while to consent on how to do it
-See the playlist if you want, brb
-re :3
-
-
-fucking oracle
-sometimes the reference to an old object still exists
-
-Thanks for watching, I'm building the version and posting it now on kc, until next time!
+Cirrus (main dev): christiank@secure-mail.biz
+...
