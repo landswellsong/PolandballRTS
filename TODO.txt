@@ -20,11 +20,41 @@ Details, what Cirrus will do himself in the near future:
 -(open)
 
 Open TODOs for the near future, feel free to contribute here:
+Note: everything should be as modular and scaleable as possible
 
--GUI
--UDP server and client, packets
--sound
--more artwork
+----------GUI----------
+>minimap (walls, fog, landscape)
+>menus
+>Buttons, shortcuts
+>start screen
+>option screen
+>unit navigation
+>selected units
+>unit bindings
+>(more)
+
+----------NETWORK----------
+UDP!
+>server
+>client
+>packets
+>packet loss management
+ 
+
+----------sound----------
+>unit sounds
+>effects
+>music
+>etc
+
+----------Artwork----------
+Whatever floats your boat.
+
+
+----------ANYTHING----------
+Thankful for pretty much any contributions.
+Give the game your personal note!
+
 
 Feel free to contribute! Your code will always be inspected, so if you're not sure
 about bugs or anything else, let us know. Use the personal contact if you want to contribute outside git,
