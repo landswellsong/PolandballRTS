@@ -2,10 +2,10 @@ Polandball RTS TODO
 
 What I expect the end product to be:
 
-Gameplay should be fun and smooth, kind of like Starcraft, which just feels right
+Gameplay should be fun and smooth, kind of like Starcraft, which just feels right.
 Network functionality! People should be able to play via the internet against and
 with each other.
-The AI should be responsive, the units somewhat self aware on what happens next to them.
+The AI should be responsive, the units somewhat self aware of what happens next to them.
 It should have a nice GUI.
 Buildings and vehicles of different kinds will be included, as well as base and unit building.
 The units should be customizable. Different weapons, buffs, mounts(?) etc...
