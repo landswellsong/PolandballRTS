@@ -13,7 +13,7 @@ Interaction with the environment should be possible. Manipulating the map for yo
 as a sandbox element alone should make the game more unique to any rts so far.
 
 Details, what Cirrus will do himself in the near future:
--AI (A* pathfinding algorithm)
+-AI (basic unit behavior)
 -Item entities
 -fog of war
 -basic vehicles
