@@ -1,10 +1,11 @@
-Polandball rts TODO
+Polandball RTS TODO
+
 What I expect the end product to be:
 
-Gameplay should be fun and smooth, kind of like Starcraft, which just feels right
+Gameplay should be fun and smooth, kind of like Starcraft, which just feels right.
 Network functionality! People should be able to play via the internet against and
 with each other.
-The AI should be responsive, the units somewhat self aware on what happens next to them.
+The AI should be responsive, the units somewhat self aware of what happens next to them.
 It should have a nice GUI.
 Buildings and vehicles of different kinds will be included, as well as base and unit building.
 The units should be customizable. Different weapons, buffs, mounts(?) etc...
@@ -19,11 +20,41 @@ Details, what Cirrus will do himself in the near future:
 -(open)
 
 Open TODOs for the near future, feel free to contribute here:
+Note: everything should be as modular and scaleable as possible
 
--GUI
--UDP server and client, packets
--sound
--more artwork
+----------GUI----------
+>minimap (walls, fog, landscape)
+>menus
+>Buttons, shortcuts
+>start screen
+>option screen
+>unit navigation
+>selected units
+>unit bindings
+>(more)
+
+----------NETWORK----------
+UDP!
+>server
+>client
+>packets
+>packet loss management
+ 
+
+----------sound----------
+>unit sounds
+>effects
+>music
+>etc
+
+----------Artwork----------
+Whatever floats your boat.
+
+
+----------ANYTHING----------
+Thankful for pretty much any contributions.
+Give the game your personal note!
+
 
 Feel free to contribute! Your code will always be inspected, so if you're not sure
 about bugs or anything else, let us know. Use the personal contact if you want to contribute outside git,
