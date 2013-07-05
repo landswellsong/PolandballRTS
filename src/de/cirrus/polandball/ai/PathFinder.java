@@ -5,7 +5,7 @@ package de.cirrus.polandball.ai;
  * Date: 05.07.13
  * Time: 02:21
  *
- * A* !!
+ * A* Hierarchical Dijkstra derivative
  */
 
 
