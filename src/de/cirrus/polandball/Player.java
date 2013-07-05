@@ -22,8 +22,6 @@ public class Player {
 	public void tick() {
 	}
 	
-
-	
 	public void sendAllSelectedTo(int x, int y, double xScroll, double yScroll) {
 		double xx = (x + xScroll) / Sprite.SCALE_X / 2;
 		double yy = (y + yScroll) / Sprite.SCALE_X;
@@ -33,6 +31,13 @@ public class Player {
 		for (Mob unit : selected) {
 			unit.setOrder(new MoveOrder(xt, yt));
 		}
+	}
+
+	public boolean canSee(int x, int y) {
+		if (x < 1 || y < 1 || x >= level.w - 1 || y >= level.h - 1) {
+			return false;
+		}
+		return true;
 	}
 
 	public Mob getUnit(int unitClass) {

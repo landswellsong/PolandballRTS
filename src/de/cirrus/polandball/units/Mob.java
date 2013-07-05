@@ -3,6 +3,7 @@ package de.cirrus.polandball.units;
 import de.cirrus.polandball.Art;
 import de.cirrus.polandball.Bitmap;
 import de.cirrus.polandball.Player;
+import de.cirrus.polandball.ai.PathFinder;
 import de.cirrus.polandball.entities.Entity;
 import de.cirrus.polandball.particles.FlameDebris;
 import de.cirrus.polandball.particles.MeatDebris;
@@ -31,7 +32,9 @@ public class Mob extends Unit {
 	
 	public double speed = 250;
 	public Order order = new IdleOrder();
-	
+
+	public PathFinder pathFinder = new PathFinder();
+
 	public Mob(int unitClass, Player player) {
 		super(player);
 		this.unitClass = unitClass;
@@ -145,7 +148,8 @@ public class Mob extends Unit {
 		deadTime = 60 * 3;
 		remove();
 	}
-	
+
+
 	public void updateWeapon() {
 		Entity target = findTarget();
 		if ((weapon.maxAmmoLoaded == 0 || weapon.ammoLoaded > 0) && target != null) {
