@@ -1,6 +1,6 @@
 Polandball RTS TODO
 
-What I expect the end product to be:
+What we expect the end product to be:
 
 Gameplay should be fun and smooth, kind of like Starcraft, which just feels right.
 Network functionality! People should be able to play via the internet against and
